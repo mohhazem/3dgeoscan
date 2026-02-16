@@ -101,7 +101,7 @@ export default function Products() {
                                     key={currentProduct.id}
                                     src={currentProduct.productImage}
                                     alt={currentProduct.title}
-                                    className="w-full h-auto object-contain max-h-full drop-shadow-xl z-10"
+                                    className="w-full h-auto object-contain max-h-full drop-shadow-xl z-10 rounded-[40px]"
                                 />
                             </div>
 

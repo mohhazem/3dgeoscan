@@ -49,7 +49,7 @@ export default function FeaturedProducts({ products, onSelectProduct }: Featured
                                 <img
                                     src={product.productImage}
                                     alt={product.title}
-                                    className="max-h-full w-auto object-contain"
+                                    className="max-h-full w-auto object-contain rounded-2xl drop-shadow-md"
                                 />
                             </div>
 

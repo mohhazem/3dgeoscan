@@ -78,4 +78,95 @@ export const products: Product[] = [
       "Automatic Point Cloud Processing",
     ],
   },
+  {
+    id: 4,
+    slug: "faro-sphere-xg",
+    title: "FARO Sphere® XG",
+    logos: ["sphere-xg.jpg"],
+    description:
+      "FARO Sphere XG is a cloud-based digital reality platform that provides a centralized, collaborative experience for reality capture and 3D modeling. When paired with the Stream mobile app, Sphere XG enables faster 3D data capture, processing, and project management from anywhere in the world. It unifies data from stationary scanning, mobile scanning, and 360° photo capture into one environment for 4D progress management.",
+    productImage: "/images/product-6.png",
+    packageIncludes: [
+      "Cloud Platform Access",
+      "Stream Mobile App Integration",
+      "Collaborative Workspace",
+      "Unlimited Cloud Storage"
+    ],
+    software: "SaaS Platform",
+    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    keyFeatures: [
+      "Cloud-based Data Centralization",
+      "Real-time Project Collaboration",
+      "4D Progress Management (Time Travel)",
+      "Integration with Stream Mobile App"
+    ]
+  },
+  {
+    id: 5,
+    slug: "faro-as-built",
+    title: "FARO® As-Built™ Software",
+    logos: ["as-built-suite.jpg"],
+    description:
+      "The FARO As-Built Software Suite specifically enables AEC professionals to process 3D laser scan data directly into Autodesk® AutoCAD® and Revit®. It streamlines the creation of accurate 2D plans and 3D models for BIM integration, reducing the time and effort required to convert reality capture data into deliverable design documents.",
+    productImage: "/images/product-7.jpg",
+    packageIncludes: [
+      "As-Built for AutoCAD",
+      "As-Built for Revit",
+      "As-Built Modeler"
+    ],
+    software: "Plugin for AutoCAD & Revit",
+    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    keyFeatures: [
+      "Seamless Integration with AutoCAD & Revit",
+      "Automated Clash Detection",
+      "Efficient Point Cloud Processing",
+      "BIM Model Creation & Validation"
+    ]
+  },
+  {
+    id: 6,
+    slug: "faro-buildit-construction",
+    title: "FARO® BuildIT Construction",
+    logos: ["built-it.jpg"],
+    description:
+      "FARO BuildIT Construction is a comprehensive verification software solution that enables laser scan data to be compared against CAD/BIM models in real-time. It is designed to minimize waste and rework by detecting errors early, allowing for accurate floor flatness analysis, tank deformation checks, and prefabrication inspection.",
+    productImage: "/images/product-8.jpg",
+    packageIncludes: [
+      "BuildIT Construction License",
+      "Real-time Comparison Tools",
+      "Analysis Modules",
+      "Export Utilities"
+    ],
+    software: "Standalone Verification Software",
+    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    keyFeatures: [
+      "Real-time Design to Build Comparison",
+      "Floor Flatness Analysis (ASTM/TR34)",
+      "Tank Deformation Analysis",
+      "Prefabricated Component Inspection"
+    ]
+  },
+  {
+    id: 7,
+    slug: "faro-scene",
+    title: "FARO® SCENE Software",
+    logos: ["scene.png"],
+    description:
+      "FARO SCENE software is specifically designed to process and manage scan data from FARO laser scanners. It utilizes automatic object recognition and registration to produce high-quality data. SCENE allows users to combine scans, colorize point clouds, and export data to various formats, featuring an immersive Virtual Reality (VR) view for data evaluation.",
+    productImage: "/images/product-9.jpg",
+    packageIncludes: [
+      "SCENE Software License",
+      "VR View Module",
+      "WebShare Cloud Access",
+      "Export Utilities"
+    ],
+    software: "Point Cloud Processing",
+    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    keyFeatures: [
+      "Automatic Scan Registration",
+      "Target-less Positioning",
+      "Virtual Reality (VR) View",
+      "WebShare Cloud Integration"
+    ]
+  },
 ];

@@ -2,12 +2,14 @@
 'use client';
 
 import { Product } from '@/constants/products';
+import {useRouter} from 'next/navigation';
 
 interface MainProductProps {
     product: Product;
 }
 
 export default function MainProduct({ product }: MainProductProps) {
+    const router = useRouter();
     const brandColorClass = 'text-orange-600';
     const brandBgClass = 'bg-[#E55C24]';
 
@@ -31,7 +33,7 @@ export default function MainProduct({ product }: MainProductProps) {
                         <img
                             src={product.productImage}
                             alt={product.title}
-                            className="w-full h-auto object-contain max-h-full drop-shadow-xl z-10"
+                            className="w-full h-auto object-contain max-h-full drop-shadow-xl z-10 rounded-[40px]"
                         />
                     </div>
 
@@ -93,7 +95,7 @@ export default function MainProduct({ product }: MainProductProps) {
                                 Get a Quote
                             </button>
                             <button
-                                onClick={handleLearnMore}
+                                onClick={() => router.push(`/products/${product.slug}`)}
                                 className="bg-white text-[#E55C24] border-2 border-[#E55C24] font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:bg-orange-50 transition cursor-pointer"
                             >
                                 Learn More
