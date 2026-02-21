@@ -81,9 +81,11 @@ export default function MainProduct({ product }: MainProductProps) {
                             {/* Software */}
                             <div>
                                 <h4 className="font-bold text-gray-900 mb-3">Software</h4>
-                                <p className="text-sm text-gray-600">
-                                    {product.software}
+                                {product.software.map((item, idx) => (
+                                    <p key={idx} className="text-sm text-gray-600">
+                                    {item}
                                 </p>
+                                ))}
                             </div>
                         </div>
 

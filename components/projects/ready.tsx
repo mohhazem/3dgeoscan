@@ -16,7 +16,7 @@ export default function Ready() {
 
         {/* description */}
         <p className="text-gray-500 text-base font-semibold sm:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-          Get in touch to discuss how 3D scanning can transform your next project.
+          Get in touch to discuss how our expertise can transform your next project.
         </p>
 
         {/* button */}

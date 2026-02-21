@@ -24,7 +24,7 @@ export default function Projects() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                             <div>
                                 <span className="inline-block bg-[#E55C24] text-white text-xs px-3 py-1 rounded-lg mb-2">
-                                    {projects[0].tag}
+                                    {projects[0].industry}
                                 </span>
                                 <h3 className="text-white text-2xl font-bold">{projects[0].name}</h3>
                             </div>
@@ -38,7 +38,7 @@ export default function Projects() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                             <div>
                                 <span className="inline-block bg-[#E55C24] text-white text-xs px-3 py-1 rounded-lg mb-2">
-                                    {projects[1].tag}
+                                    {projects[1].industry}
                                 </span>
                                 <h3 className="text-white text-2xl font-bold">{projects[1].name}</h3>
                             </div>
@@ -51,7 +51,7 @@ export default function Projects() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
                                 <div>
                                     <span className="inline-block bg-[#E55C24] text-white text-xs px-2 py-1 rounded-lg mb-1">
-                                        {project.tag}
+                                        {project.industry}
                                     </span>
                                     <h3 className="text-white font-bold">{project.name}</h3>
                                 </div>

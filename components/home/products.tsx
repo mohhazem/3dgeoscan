@@ -89,10 +89,10 @@ export default function Products() {
                     <div className="overflow-hidden w-full">
                         {/* Main Grid Content: Changed from 3 columns to 2 columns */}
                         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full min-h-[350px] md:min-h-[450px] ${status === 'exiting'
-                                ? 'transition-all duration-500 ease-in-out ' + (slideDirection === 'right' ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0')
-                                : status === 'teleporting'
-                                    ? (slideDirection === 'right' ? 'translate-x-full' : '-translate-x-full') // No transition during teleport
-                                    : 'transition-all duration-500 ease-in-out translate-x-0 opacity-100'
+                            ? 'transition-all duration-500 ease-in-out ' + (slideDirection === 'right' ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0')
+                            : status === 'teleporting'
+                                ? (slideDirection === 'right' ? 'translate-x-full' : '-translate-x-full') // No transition during teleport
+                                : 'transition-all duration-500 ease-in-out translate-x-0 opacity-100'
                             }`}>
 
                             {/* --- Column 1: Product Image (Card Style) --- */}
@@ -117,7 +117,7 @@ export default function Products() {
                                         // <span key={i} className="font-bold text-gray-700 text-sm tracking-widest uppercase border border-gray-300 px-2 py-1 rounded">
                                         //     {logo}
                                         // </span>
-                                        <img key={i} src={`/images/${logo}`} alt="" className='h-12'/>
+                                        <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
                                     ))}
                                 </div>
 
@@ -144,9 +144,11 @@ export default function Products() {
                                     {/* Software */}
                                     <div>
                                         <h4 className="font-bold text-gray-900 mb-3">Software</h4>
-                                        <p className="text-sm text-gray-600">
-                                            {currentProduct.software}
-                                        </p>
+                                        {currentProduct.software.map((item, idx) => (
+                                            <p key={idx} className="text-sm text-gray-600">
+                                                {item}
+                                            </p>
+                                        ))}
                                     </div>
                                 </div>
 
