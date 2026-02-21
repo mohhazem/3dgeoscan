@@ -9,7 +9,7 @@ export default function Service4() {
 
     const handleMove = (clientX: number) => {
         if (!containerRef.current || !isDragging.current) return;
-        
+
         const rect = containerRef.current.getBoundingClientRect();
         const x = clientX - rect.left;
         const percentage = (x / rect.width) * 100;
@@ -34,27 +34,28 @@ export default function Service4() {
 
     // Key Features Data
     const features = [
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
+        "Deep-Earth Visualization.",
+        "Void and Cavity Detection.",
+        "Non-Invasive analysis",
+        "Geodata Integration.",
     ];
 
     // Application Industries Data
     const applications = [
-        { icon: "location", name: "Industry name" },
-        { icon: "location", name: "Industry name" },
-        { icon: "building", name: "Industry Name" },
+        { icon: "building", name: "Mining and Mineral Mapping" },
+        { icon: "building", name: "Archaeological Site Assessment" },
+        { icon: "building", name: "Infrastructure Foundations" },
+        { icon: "building", name: "Deep-Surface Oil & Gas exploration" },
     ];
 
     return (
-        <section id="geophysical-studies" className="h-screen bg-gray-50 py-20 snap-start flex items-center snap-start">
+        <section id="geophysical-studies" className="h-screen bg-gray-50 py-20 snap-start flex items-center">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                    
+
                     {/* Left Side - Image Slider (SWAPPED) */}
                     <div className="order-1">
-                        <div 
+                        <div
                             ref={containerRef}
                             className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden cursor-ew-resize select-none shadow-lg"
                             onMouseMove={handleMouseMove}
@@ -67,27 +68,27 @@ export default function Service4() {
                         >
                             {/* Before Image (Left Side) */}
                             <div className="absolute inset-0">
-                                <img 
-                                    src="/images/before-image.png"
+                                <img
+                                    src="/images/gps-before.jpg"
                                     alt="Before - Original scan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* After Image (Right Side) */}
-                            <div 
+                            <div
                                 className="absolute inset-0"
                                 style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
                             >
-                                <img 
-                                    src="/images/3d-service.png"
+                                <img
+                                    src="/images/gps-after.jpg"
                                     alt="After - 3D model"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* Slider Handle */}
-                            <div 
+                            <div
                                 className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
                                 style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
                             >
@@ -119,14 +120,13 @@ export default function Service4() {
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            Precision Reality Capture for Complex Environments
+                            Revealing the Hidden Earth with Digital Precision
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
-                            do eiusmod tempor incididunt ut labore et dolore magna 
-                            aliqua. Ut enim ad minim veniam.
+                            We go beyond the surface to provide high quality data on ground materials , composition
+                            and stability. A clear look at the earth below to avoid potential risks and ensure safety.
                         </p>
 
                         {/* Key Features */}
@@ -151,8 +151,8 @@ export default function Service4() {
                             <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
-                                    <div 
-                                        key={index} 
+                                    <div
+                                        key={index}
                                         className="flex items-center gap-2 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#E85A2C] transition-colors"
                                     >
                                         {app.icon === "location" ? (

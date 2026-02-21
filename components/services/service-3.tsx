@@ -9,7 +9,7 @@ export default function Service3() {
 
     const handleMove = (clientX: number) => {
         if (!containerRef.current || !isDragging.current) return;
-        
+
         const rect = containerRef.current.getBoundingClientRect();
         const x = clientX - rect.left;
         const percentage = (x / rect.width) * 100;
@@ -34,24 +34,24 @@ export default function Service3() {
 
     // Key Features Data
     const features = [
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
+        "High-Fidelity Virtualization (mm accuracy)",
+        "BIM-Ready intelligence",
+        "Global remote access (visit your site virtually at anytime)",
+        "Decision making and asset management",
     ];
 
     // Application Industries Data
     const applications = [
-        { icon: "location", name: "Industry name" },
-        { icon: "location", name: "Industry name" },
-        { icon: "building", name: "Industry Name" },
+        { icon: "building", name: "Architecture Engineering and Construction (AEC)" },
+        { icon: "building", name: "Heritage-Industrial and Manufacturing" },
+        { icon: "building", name: "infrastructure and urban assets" },
     ];
 
     return (
-        <section id="digital-twin" className="h-screen bg-white py-20 snap-start flex items-center snap-start">
+        <section id="digital-twin" className="h-screen bg-white py-20 snap-start flex items-center">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                    
+
                     {/* Left Side - Text Content */}
                     <div className="order-2 lg:order-1">
                         {/* Main Title */}
@@ -61,14 +61,13 @@ export default function Service3() {
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            Precision Reality Capture for Complex Environments
+                            Exact digital version of every industry
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
-                            do eiusmod tempor incididunt ut labore et dolore magna 
-                            aliqua. Ut enim ad minim veniam.
+                            We create highly accurate 1:1 digital twins, a powerful tool for monitoring, simulating and
+                            managing your project by combining 3D scanning with real-time data.
                         </p>
 
                         {/* Key Features */}
@@ -93,8 +92,8 @@ export default function Service3() {
                             <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
-                                    <div 
-                                        key={index} 
+                                    <div
+                                        key={index}
                                         className="flex items-center gap-2 border border-gray-200 px-4 py-2 rounded-full hover:border-[#E85A2C] transition-colors"
                                     >
                                         {app.icon === "location" ? (
@@ -116,7 +115,7 @@ export default function Service3() {
 
                     {/* Right Side - Image Slider */}
                     <div className="order-1 lg:order-2">
-                        <div 
+                        <div
                             ref={containerRef}
                             className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden cursor-ew-resize select-none shadow-lg"
                             onMouseMove={handleMouseMove}
@@ -129,27 +128,27 @@ export default function Service3() {
                         >
                             {/* Before Image (Left Side) */}
                             <div className="absolute inset-0">
-                                <img 
-                                    src="/images/before-image.png"
+                                <img
+                                    src="/images/dt-before.jpg"
                                     alt="Before - Original scan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* After Image (Right Side) */}
-                            <div 
+                            <div
                                 className="absolute inset-0"
                                 style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
                             >
-                                <img 
-                                    src="/images/3d-service.png"
+                                <img
+                                    src="/images/dt-after.jpg"
                                     alt="After - 3D model"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* Slider Handle */}
-                            <div 
+                            <div
                                 className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
                                 style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
                             >
