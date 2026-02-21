@@ -1,7 +1,27 @@
+"use client";
+
 import { CONTACT_INFO, SOCIALS } from "@/constants/contact";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ContactSection() {
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    
+    const services = [
+        "3D Scanning",
+        "Underground Utilities",
+        "Digital Twin",
+        "Geophysical Studies"
+    ];
+    
+    const toggleService = (service: string) => {
+        setSelectedServices(prev => 
+            prev.includes(service) 
+                ? prev.filter(s => s !== service)
+                : [...prev, service]
+        );
+    };
+    
     return (
         <section className="flex items-center bg-white py-32">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -149,24 +169,27 @@ export default function ContactSection() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Service Interest</label>
-                                <div className="relative">
-                                    <select
-                                        defaultValue="Select a service..."
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none appearance-none cursor-pointer transition duration-200 text-gray-600">
-                                        <option disabled>Select a service...</option>
-                                        <option>3D Scanning</option>
-                                        <option>Underground Utilities</option>
-                                        <option>Digital Twin</option>
-                                        <option>Geophysical Studies</option>
-                                    </select>
-                                    <div
-                                        className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Service Interest 
+                                    {selectedServices.length > 0 && (
+                                        <span className="text-brand-orange ml-2">({selectedServices.length} selected)</span>
+                                    )}
+                                </label>
+                                <div className="flex flex-wrap gap-3">
+                                    {services.map((service) => (
+                                        <button
+                                            key={service}
+                                            type="button"
+                                            onClick={() => toggleService(service)}
+                                            className={`px-5 py-2.5 rounded-full font-medium transition-all duration-200 cursor-pointer ${
+                                                selectedServices.includes(service)
+                                                    ? 'bg-brand-orange text-white shadow-md hover:shadow-lg hover:bg-[#c9461d] transform hover:scale-105'
+                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
+                                            }`}
+                                        >
+                                            {service}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
