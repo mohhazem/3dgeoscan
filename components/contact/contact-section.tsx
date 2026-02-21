@@ -2,12 +2,10 @@
 
 import { CONTACT_INFO, SOCIALS } from "@/constants/contact";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 export default function ContactSection() {
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
     
     const services = [
         "3D Scanning",
@@ -23,18 +21,6 @@ export default function ContactSection() {
                 : [...prev, service]
         );
     };
-    
-    // Close dropdown when clicking outside
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
-            }
-        };
-        
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
     
     return (
         <section className="flex items-center bg-white py-32">
@@ -183,41 +169,27 @@ export default function ContactSection() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Service Interest</label>
-                                <div className="relative" ref={dropdownRef}>
-                                    <div
-                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none cursor-pointer transition duration-200 text-gray-600 flex justify-between items-center">
-                                        <span className={selectedServices.length === 0 ? "text-gray-400" : "text-gray-900"}>
-                                            {selectedServices.length === 0 
-                                                ? "Select services..." 
-                                                : selectedServices.length === 1
-                                                ? selectedServices[0]
-                                                : `${selectedServices.length} services selected`}
-                                        </span>
-                                        <svg className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </div>
-                                    
-                                    {isDropdownOpen && (
-                                        <div className="absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                                            {services.map((service) => (
-                                                <label
-                                                    key={service}
-                                                    className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors first:rounded-t-lg last:rounded-b-lg"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selectedServices.includes(service)}
-                                                        onChange={() => toggleService(service)}
-                                                        className="w-4 h-4 text-brand-orange border-gray-300 rounded focus:ring-brand-orange focus:ring-2"
-                                                    />
-                                                    <span className="ml-3 text-gray-700">{service}</span>
-                                                </label>
-                                            ))}
-                                        </div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Service Interest 
+                                    {selectedServices.length > 0 && (
+                                        <span className="text-brand-orange ml-2">({selectedServices.length} selected)</span>
                                     )}
+                                </label>
+                                <div className="flex flex-wrap gap-3">
+                                    {services.map((service) => (
+                                        <button
+                                            key={service}
+                                            type="button"
+                                            onClick={() => toggleService(service)}
+                                            className={`px-5 py-2.5 rounded-full font-medium transition-all duration-200 cursor-pointer ${
+                                                selectedServices.includes(service)
+                                                    ? 'bg-brand-orange text-white shadow-md hover:shadow-lg hover:bg-[#c9461d] transform hover:scale-105'
+                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
+                                            }`}
+                                        >
+                                            {service}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
