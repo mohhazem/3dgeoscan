@@ -43,12 +43,13 @@ export default function Service3() {
     // Application Industries Data
     const applications = [
         { icon: "building", name: "Architecture Engineering and Construction (AEC)" },
+        { icon: "building", name: "Heritage" },
         { icon: "building", name: "Heritage-Industrial and Manufacturing" },
         { icon: "building", name: "infrastructure and urban assets" },
     ];
 
     return (
-        <section id="digital-twin" className="h-screen bg-white py-20 snap-start flex items-center">
+        <section id="digital-twin" className="min-h-screen md:h-screen bg-white py-20 flex items-center">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 

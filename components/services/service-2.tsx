@@ -48,7 +48,7 @@ export default function Service2() {
     ];
 
     return (
-        <section id="underground-utilities" className="h-screen bg-gray-50 py-20 snap-start flex items-center">
+        <section id="underground-utilities" className="min-h-screen md:h-screen bg-gray-50 py-20 flex items-center">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
@@ -119,7 +119,7 @@ export default function Service2() {
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            The full picture: A clear view of everything above
+                            A clear view of everything above
                             and below the ground in one place
                         </h3>
 

@@ -4,7 +4,7 @@ import React from 'react';
 
 const OurServices = () => {
   return (
-    <section className="h-screen bg-white py-20 snap-start flex items-center">
+    <section className="min-h-screen bg-white py-20 flex items-center">
       <div className="max-w-4xl mx-auto text-center">
         {/* Label */}
         <span className="text-[#E85A2C] font-medium text-md tracking-wide">

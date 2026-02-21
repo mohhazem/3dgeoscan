@@ -42,13 +42,14 @@ export default function Service1() {
 
     // Application Industries Data
     const applications = [
-        { icon: "building", name: "Industry-AEC-Oil" },
-        { icon: "building", name: "Gas-Heritage" },
-        { icon: "building", name: "Archeology-urban assets" },
+        { icon: "building", name: "Industry-AEC" },
+        { icon: "building", name: "Oil and Gas-Heritage" },
+        { icon: "building", name: "Archeology" },
+        { icon: "building", name: "Urban assets" },
     ];
 
     return (
-        <section id="3d-scanning" className="h-screen bg-white py-20 snap-start flex items-center snap-start">
+        <section id="3d-scanning" className="min-h-screen md:h-screen bg-white py-20 flex items-center">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
