@@ -163,13 +163,6 @@ export default function Service1() {
                                     </svg>
                                 </div>
                             </div>
-
-                            {/* PlaceHolder Button */}
-                            <div className="absolute bottom-4 right-4">
-                                <button className="bg-[#E85A2C] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#d14a1f] transition-colors">
-                                    PlaceHolder
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
