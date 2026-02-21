@@ -1,7 +1,41 @@
+"use client";
+
 import { CONTACT_INFO, SOCIALS } from "@/constants/contact";
 import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 
 export default function ContactSection() {
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    
+    const services = [
+        "3D Scanning",
+        "Underground Utilities",
+        "Digital Twin",
+        "Geophysical Studies"
+    ];
+    
+    const toggleService = (service: string) => {
+        setSelectedServices(prev => 
+            prev.includes(service) 
+                ? prev.filter(s => s !== service)
+                : [...prev, service]
+        );
+    };
+    
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+    
     return (
         <section className="flex items-center bg-white py-32">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -150,23 +184,40 @@ export default function ContactSection() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Service Interest</label>
-                                <div className="relative">
-                                    <select
-                                        defaultValue="Select a service..."
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none appearance-none cursor-pointer transition duration-200 text-gray-600">
-                                        <option disabled>Select a service...</option>
-                                        <option>3D Scanning</option>
-                                        <option>Underground Utilities</option>
-                                        <option>Digital Twin</option>
-                                        <option>Geophysical Studies</option>
-                                    </select>
+                                <div className="relative" ref={dropdownRef}>
                                     <div
-                                        className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                d="M19 9l-7 7-7-7"></path>
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none cursor-pointer transition duration-200 text-gray-600 flex justify-between items-center">
+                                        <span className={selectedServices.length === 0 ? "text-gray-400" : "text-gray-900"}>
+                                            {selectedServices.length === 0 
+                                                ? "Select services..." 
+                                                : selectedServices.length === 1
+                                                ? selectedServices[0]
+                                                : `${selectedServices.length} services selected`}
+                                        </span>
+                                        <svg className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </div>
+                                    
+                                    {isDropdownOpen && (
+                                        <div className="absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                                            {services.map((service) => (
+                                                <label
+                                                    key={service}
+                                                    className="flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors first:rounded-t-lg last:rounded-b-lg"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedServices.includes(service)}
+                                                        onChange={() => toggleService(service)}
+                                                        className="w-4 h-4 text-brand-orange border-gray-300 rounded focus:ring-brand-orange focus:ring-2"
+                                                    />
+                                                    <span className="ml-3 text-gray-700">{service}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
