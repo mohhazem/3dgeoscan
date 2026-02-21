@@ -44,8 +44,8 @@ export default function Service3() {
     const applications = [
         { icon: "building", name: "Architecture Engineering and Construction (AEC)" },
         { icon: "building", name: "Heritage" },
-        { icon: "building", name: "Heritage-Industrial and Manufacturing" },
-        { icon: "building", name: "infrastructure and urban assets" },
+        { icon: "building", name: "Industrial and Manufacturing" },
+        { icon: "building", name: "Infrastructure and urban assets" },
     ];
 
     return (

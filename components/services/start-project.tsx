@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function start() {
   return (
-    <section id="start" className="relative py-24 md:py-32 flex items-center bg-white">
+    <section id="start" className="relative py-24 md:py-32 flex items-centergit bg-white">
 
       {/* content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
