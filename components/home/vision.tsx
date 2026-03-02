@@ -20,7 +20,7 @@ export default function Solutions() {
                         loop
                         playsInline
                     >
-                        <source src="./videos/video.mp4" type="video/mp4" />
+                        <source src="./videos/3dgeoscan.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
