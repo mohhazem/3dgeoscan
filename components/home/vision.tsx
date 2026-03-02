@@ -12,12 +12,17 @@ export default function Solutions() {
                     We map the Earth in 3D to build smarter cities, preserve our past, and protect our future. 3D Geoscan turns geo-intelligence into the ultimate tool for a sustainable planet.
                 </p>
 
-                <div className="w-full rounded-2xl overflow-hidden max-h-[250px] md:max-h-[400px] lg:max-h-[500px]">
-                    <img
-                        src="./images/vision.jpg"
-                        alt="Solutions"
-                        className="w-full h-full object-cover"
-                    />
+                <div className="w-full rounded-2xl overflow-hidden">
+                    <video
+                        className="w-full h-[250px] md:h-[400px] lg:h-[500px] object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                    >
+                        <source src="./videos/video.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
         </section>

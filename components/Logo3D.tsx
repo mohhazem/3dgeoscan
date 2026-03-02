@@ -4,45 +4,36 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
-// ============================================
-// ANIMATION CONFIGURATION - Adjust these values
-// ============================================
 const CONFIG = {
-  // Angles where the model will stop (in degrees for easier understanding)
-  // The model will stop at each of these angles in sequence
-  stopAngles: [268], // degrees
-  
-  // How long to pause at each stop (in milliseconds)
-  pauseDuration: 3000, // 3 seconds
-  
-  // How long the easing animation takes (in milliseconds)
-  easeDuration: 800, // 0.8 seconds for smooth stop/start
-  
-  // Base rotation speed (radians per frame)
-  rotationSpeed: 0.018,
-  
-  // How long to rotate before stopping (in milliseconds)
-  // Set to null to stop at next angle automatically
-  rotationDuration: 4000, // 4 seconds of rotation, or null
+  stopAngles: [268],
+  pauseDuration: 3000,
+  easeDuration: 800,
+  dragSensitivity: 0.01,
+  // Orthographic zoom — lower = more zoomed in
+  orthoZoom: 6,
 };
 
-// Convert degrees to radians
 const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
-
-// Easing functions
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
-const easeInCubic = (t: number): number => t * t * t;
-const easeInOutCubic = (t: number): number => 
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-// Animation states
-type AnimationState = 'rotating' | 'easing_to_stop' | 'paused' | 'easing_to_start';
+type AnimationState = 'idle' | 'dragging' | 'easing_to_stop' | 'paused';
 
 export default function Logo3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationIdRef = useRef<number | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const isInitializedRef = useRef(false);
+
+  const isDraggingRef = useRef(false);
+  const previousMouseXRef = useRef(0);
+  const animationStateRef = useRef<AnimationState>('idle');
+  const pivotRef = useRef<THREE.Group | null>(null);
+  const easeDataRef = useRef({
+    startTime: 0,
+    startAngle: 0,
+    targetAngle: 0,
+    pauseStartTime: 0,
+  });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -68,7 +59,18 @@ export default function Logo3D() {
 
       // Scene setup
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+
+      // ---- ORTHOGRAPHIC CAMERA ----
+      const aspect = width / height;
+      const zoom = CONFIG.orthoZoom;
+      const camera = new THREE.OrthographicCamera(
+        -zoom * aspect, // left
+         zoom * aspect, // right
+         zoom,          // top
+        -zoom,          // bottom
+        0.1,            // near
+        1000            // far
+      );
       camera.position.set(8, 8, 8);
       camera.lookAt(0, 0, 0);
 
@@ -101,75 +103,115 @@ export default function Logo3D() {
 
       // Pivot structure
       const pivot = new THREE.Group();
+      pivotRef.current = pivot;
       scene.add(pivot);
 
       const wrapper = new THREE.Group();
       pivot.add(wrapper);
 
-      // ============================================
-      // ANIMATION STATE
-      // ============================================
-      let animationState: AnimationState = 'rotating';
-      let currentAngleIndex = 0;
-      let rotationStartTime = Date.now();
-      let easeStartTime = 0;
-      let easeStartAngle = 0;
-      let easeTargetAngle = 0;
-      let pauseStartTime = 0;
-      
-      // Convert stop angles to radians and sort them
+      // Stop angles in radians
       const stopAnglesRad = CONFIG.stopAngles
         .map(degreesToRadians)
         .sort((a, b) => a - b);
 
-      // Normalize angle to 0 - 2π range
       const normalizeAngle = (angle: number): number => {
         angle = angle % (Math.PI * 2);
         if (angle < 0) angle += Math.PI * 2;
         return angle;
       };
 
-      // Find the next stop angle from current rotation
-      const findNextStopAngle = (currentAngle: number): number => {
+      const findNearestStopAngle = (currentAngle: number): number => {
         const normalized = normalizeAngle(currentAngle);
-        
-        for (let i = 0; i < stopAnglesRad.length; i++) {
-          if (stopAnglesRad[i] > normalized + 0.01) { // Small threshold to avoid stopping immediately
-            currentAngleIndex = i;
-            return stopAnglesRad[i];
+        let nearest = stopAnglesRad[0];
+        let minDistance = Infinity;
+
+        for (const stopAngle of stopAnglesRad) {
+          const dist1 = Math.abs(stopAngle - normalized);
+          const dist2 = Math.PI * 2 - dist1;
+          const distance = Math.min(dist1, dist2);
+
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearest = stopAngle;
           }
         }
-        
-        // Wrap around to first angle (add 2π to make it the "next" angle)
-        currentAngleIndex = 0;
-        return stopAnglesRad[0] + Math.PI * 2;
+
+        let target = nearest;
+        const diff = target - normalized;
+        if (diff > Math.PI) target -= Math.PI * 2;
+        if (diff < -Math.PI) target += Math.PI * 2;
+
+        return currentAngle + (target - normalized);
       };
 
-      // Get the target angle for the current stop
-      const getCurrentStopAngle = (): number => {
-        return stopAnglesRad[currentAngleIndex];
+      // ============================================
+      // DRAG EVENT HANDLERS
+      // ============================================
+      const onMouseDown = (e: MouseEvent) => {
+        e.preventDefault();
+        isDraggingRef.current = true;
+        previousMouseXRef.current = e.clientX;
+        animationStateRef.current = 'dragging';
+        renderer.domElement.style.cursor = 'grabbing';
       };
 
-      // Check if it's time to start stopping
-      const shouldStartStopping = (): boolean => {
-        if (CONFIG.rotationDuration !== null) {
-          // Time-based: stop after rotating for specified duration
-          return Date.now() - rotationStartTime >= CONFIG.rotationDuration;
-        } else {
-          // Angle-based: stop when approaching next stop angle
-          const currentAngle = normalizeAngle(pivot.rotation.y);
-          const nextStop = normalizeAngle(findNextStopAngle(pivot.rotation.y));
-          const distance = nextStop - currentAngle;
-          
-          // Start easing when we're close enough to stop smoothly
-          const stoppingDistance = CONFIG.rotationSpeed * (CONFIG.easeDuration / 16);
-          return distance > 0 && distance <= stoppingDistance;
-        }
+      const onMouseMove = (e: MouseEvent) => {
+        if (!isDraggingRef.current || !pivotRef.current) return;
+        const deltaX = e.clientX - previousMouseXRef.current;
+        previousMouseXRef.current = e.clientX;
+        pivotRef.current.rotation.y += deltaX * CONFIG.dragSensitivity;
       };
+
+      const onMouseUp = () => {
+        if (!isDraggingRef.current || !pivotRef.current) return;
+        isDraggingRef.current = false;
+        renderer.domElement.style.cursor = 'grab';
+
+        animationStateRef.current = 'easing_to_stop';
+        easeDataRef.current.startTime = Date.now();
+        easeDataRef.current.startAngle = pivotRef.current.rotation.y;
+        easeDataRef.current.targetAngle = findNearestStopAngle(pivotRef.current.rotation.y);
+
+        console.log(
+          `Easing to ${(normalizeAngle(easeDataRef.current.targetAngle) * 180 / Math.PI).toFixed(1)}°`
+        );
+      };
+
+      const onTouchStart = (e: TouchEvent) => {
+        if (e.touches.length !== 1) return;
+        isDraggingRef.current = true;
+        previousMouseXRef.current = e.touches[0].clientX;
+        animationStateRef.current = 'dragging';
+      };
+
+      const onTouchMove = (e: TouchEvent) => {
+        if (!isDraggingRef.current || e.touches.length !== 1 || !pivotRef.current) return;
+        e.preventDefault();
+        const deltaX = e.touches[0].clientX - previousMouseXRef.current;
+        previousMouseXRef.current = e.touches[0].clientX;
+        pivotRef.current.rotation.y += deltaX * CONFIG.dragSensitivity;
+      };
+
+      const onTouchEnd = () => {
+        if (!isDraggingRef.current || !pivotRef.current) return;
+        isDraggingRef.current = false;
+
+        animationStateRef.current = 'easing_to_stop';
+        easeDataRef.current.startTime = Date.now();
+        easeDataRef.current.startAngle = pivotRef.current.rotation.y;
+        easeDataRef.current.targetAngle = findNearestStopAngle(pivotRef.current.rotation.y);
+      };
+
+      renderer.domElement.style.cursor = 'grab';
+      renderer.domElement.addEventListener('mousedown', onMouseDown);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+      renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: true });
+      renderer.domElement.addEventListener('touchmove', onTouchMove, { passive: false });
+      renderer.domElement.addEventListener('touchend', onTouchEnd);
 
       // Load FBX model
       const loader = new FBXLoader();
-
       loader.load(
         '/models/logo.fbx',
         (fbx) => {
@@ -198,7 +240,7 @@ export default function Logo3D() {
                   metalness: 0.3,
                   roughness: 0.4,
                   emissive: 0xf15a27,
-                  emissiveIntensity: 0.1
+                  emissiveIntensity: 0.1,
                 });
               } else if (name.includes('floor')) {
                 child.material = new THREE.MeshStandardMaterial({
@@ -222,9 +264,7 @@ export default function Logo3D() {
           wrapper.add(fbx);
         },
         undefined,
-        (error) => {
-          console.error('Error loading model:', error);
-        }
+        (error) => console.error('Error loading model:', error)
       );
 
       // ============================================
@@ -232,71 +272,44 @@ export default function Logo3D() {
       // ============================================
       const animate = () => {
         animationIdRef.current = requestAnimationFrame(animate);
-        
         const now = Date.now();
+        const state = animationStateRef.current;
+        const pivot = pivotRef.current;
 
-        switch (animationState) {
-          case 'rotating':
-            // Normal rotation
-            pivot.rotation.y += CONFIG.rotationSpeed;
-            
-            // Check if we should start stopping
-            if (shouldStartStopping()) {
-              animationState = 'easing_to_stop';
-              easeStartTime = now;
-              easeStartAngle = pivot.rotation.y;
-              easeTargetAngle = findNextStopAngle(pivot.rotation.y);
-              
-              // Ensure target is ahead of current position
-              while (easeTargetAngle <= easeStartAngle) {
-                easeTargetAngle += Math.PI * 2;
-              }
-              
-              console.log(`Easing to stop at ${(normalizeAngle(easeTargetAngle) * 180 / Math.PI).toFixed(1)}°`);
-            }
+        if (!pivot) {
+          renderer.render(scene, camera);
+          return;
+        }
+
+        switch (state) {
+          case 'idle':
+          case 'dragging':
             break;
 
-          case 'easing_to_stop':
-            // Smooth deceleration to target angle
-            const stopProgress = Math.min((now - easeStartTime) / CONFIG.easeDuration, 1);
-            const easedStopProgress = easeOutCubic(stopProgress);
-            
-            pivot.rotation.y = easeStartAngle + (easeTargetAngle - easeStartAngle) * easedStopProgress;
-            
-            if (stopProgress >= 1) {
-              pivot.rotation.y = easeTargetAngle;
-              animationState = 'paused';
-              pauseStartTime = now;
-              console.log(`Paused at ${(normalizeAngle(pivot.rotation.y) * 180 / Math.PI).toFixed(1)}°`);
-            }
-            break;
+          case 'easing_to_stop': {
+            const { startTime, startAngle, targetAngle } = easeDataRef.current;
+            const progress = Math.min((now - startTime) / CONFIG.easeDuration, 1);
+            const eased = easeOutCubic(progress);
 
-          case 'paused':
-            // Wait for pause duration
-            if (now - pauseStartTime >= CONFIG.pauseDuration) {
-              animationState = 'easing_to_start';
-              easeStartTime = now;
-              easeStartAngle = pivot.rotation.y;
-              console.log('Starting rotation again...');
-            }
-            break;
+            pivot.rotation.y = startAngle + (targetAngle - startAngle) * eased;
 
-          case 'easing_to_start':
-            // Smooth acceleration from stop
-            const startProgress = Math.min((now - easeStartTime) / CONFIG.easeDuration, 1);
-            const easedStartProgress = easeInCubic(startProgress);
-            
-            // Gradually increase rotation speed
-            pivot.rotation.y += CONFIG.rotationSpeed * easedStartProgress;
-            
-            if (startProgress >= 1) {
-              animationState = 'rotating';
-              rotationStartTime = now;
-              
-              // Move to next angle index for next stop
-              currentAngleIndex = (currentAngleIndex + 1) % stopAnglesRad.length;
+            if (progress >= 1) {
+              pivot.rotation.y = targetAngle;
+              animationStateRef.current = 'paused';
+              easeDataRef.current.pauseStartTime = now;
+              console.log(
+                `Paused at ${(normalizeAngle(pivot.rotation.y) * 180 / Math.PI).toFixed(1)}°`
+              );
             }
             break;
+          }
+
+          case 'paused': {
+            if (now - easeDataRef.current.pauseStartTime >= CONFIG.pauseDuration) {
+              animationStateRef.current = 'idle';
+            }
+            break;
+          }
         }
 
         renderer.render(scene, camera);
@@ -304,8 +317,8 @@ export default function Logo3D() {
 
       animate();
 
-      // Resize handler
-      let resizeTimeout: NodeJS.Timeout;
+      // ---- RESIZE — update ortho camera bounds ----
+      let resizeTimeout: ReturnType<typeof setTimeout>;
       const handleResize = () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
@@ -313,8 +326,15 @@ export default function Logo3D() {
           const w = containerRef.current.clientWidth;
           const h = containerRef.current.clientHeight;
           if (w === 0 || h === 0) return;
-          camera.aspect = w / h;
+
+          const aspect = w / h;
+          const zoom = CONFIG.orthoZoom;
+          camera.left   = -zoom * aspect;
+          camera.right  =  zoom * aspect;
+          camera.top    =  zoom;
+          camera.bottom = -zoom;
           camera.updateProjectionMatrix();
+
           renderer.setSize(w, h);
         }, 100);
       };
@@ -323,6 +343,12 @@ export default function Logo3D() {
 
       (containerRef.current as any).__cleanup = () => {
         window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+        renderer.domElement.removeEventListener('mousedown', onMouseDown);
+        renderer.domElement.removeEventListener('touchstart', onTouchStart);
+        renderer.domElement.removeEventListener('touchmove', onTouchMove);
+        renderer.domElement.removeEventListener('touchend', onTouchEnd);
         clearTimeout(resizeTimeout);
         if (animationIdRef.current) {
           cancelAnimationFrame(animationIdRef.current);
@@ -358,11 +384,8 @@ export default function Logo3D() {
       if (containerRef.current) {
         const cleanup = (containerRef.current as any).__cleanup;
         if (cleanup) cleanup();
-
         const canvas = containerRef.current.querySelector('canvas');
-        if (canvas) {
-          containerRef.current.removeChild(canvas);
-        }
+        if (canvas) containerRef.current.removeChild(canvas);
       }
 
       if (rendererRef.current) {
@@ -376,11 +399,7 @@ export default function Logo3D() {
     <div
       ref={containerRef}
       className="w-full h-full flex items-center justify-center"
-      style={{
-        minWidth: '100%',
-        minHeight: '100%',
-        position: 'relative'
-      }}
+      style={{ minWidth: '100%', minHeight: '100%', position: 'relative' }}
     />
   );
 }
