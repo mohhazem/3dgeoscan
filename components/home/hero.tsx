@@ -41,7 +41,7 @@ export default function Hero() {
            A World Transformed by <Typewriter words={["Precision Scanning", "Digital Innovation", "3D Geo-Intelligence"]} />
         </p>
         <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-xl leading-relaxed">
-          utilizing cutting-edge laser scanning technology and expert analysis, we capture
+          utilizing cutting-edge laser scanning technology and we capture
           reality in unparalleled detail — enabling smarter design, faster construction, and
           precise heritage preservation.
         </p>
@@ -55,7 +55,7 @@ export default function Hero() {
             Watch our videos
           </Link> */}
             <Link
-            href="/videos"
+            href="https://www.youtube.com/@3DGeoscan/featured"
             className="bg-white/20  border border-white text-white px-6 py-3 rounded-xl text-base font-medium hover:bg-white hover:text-gray-900 transition-colors text-center"
             >
             Watch our videos

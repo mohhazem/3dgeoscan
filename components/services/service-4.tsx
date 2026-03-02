@@ -42,10 +42,10 @@ export default function Service4() {
 
     // Application Industries Data
     const applications = [
-        { icon: "building", name: "Mining and Mineral Mapping" },
+        { icon: "building", name: "Water Paths" },
         { icon: "building", name: "Archaeological Site Assessment" },
         { icon: "building", name: "Infrastructure Foundations" },
-        { icon: "building", name: "Deep-Surface Oil & Gas exploration" },
+        
     ];
 
     return (

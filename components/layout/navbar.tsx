@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -15,22 +15,38 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [indicatorReady, setIndicatorReady] = useState(false);
   const pathname = usePathname();
+  const navRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
 
-  // Check if we're on the home page
   const isHomePage = pathname === "/";
+  const isSolid = scrolled || !isHomePage;
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 0);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 0);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Navbar is solid if: scrolled OR not on home page
-  const isSolid = scrolled || !isHomePage;
+  useEffect(() => {
+    const activeLink = linkRefs.current[pathname];
+    const navContainer = navRef.current;
+
+    if (activeLink && navContainer) {
+      const navRect = navContainer.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      setIndicatorStyle({
+        left: linkRect.left - navRect.left,
+        width: linkRect.width,
+      });
+      setIndicatorReady(true);
+    } else {
+      setIndicatorReady(false);
+    }
+  }, [pathname]);
 
   return (
     <nav
@@ -40,7 +56,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          
+
           {/* logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
@@ -57,20 +73,34 @@ export default function Navbar() {
           </Link>
 
           {/* desktop menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div ref={navRef} className="hidden md:flex items-center gap-8 relative">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`${
+                ref={(el: HTMLAnchorElement | null) => {
+                  linkRefs.current[link.href] = el;
+                }}
+                className={`relative transition-colors text-sm font-medium pb-1 ${
                   isSolid
                     ? "text-gray-900 hover:text-gray-700"
                     : "text-white/80 hover:text-white"
-                } transition-colors text-sm font-medium`}
+                }`}
               >
                 {link.label}
               </Link>
             ))}
+
+            {/* sliding indicator */}
+            <span
+              className={`absolute bottom-0 h-[2.5px] rounded-full bg-[#E55C24] transition-all duration-300 ease-in-out ${
+                indicatorReady ? "opacity-100" : "opacity-0"
+              }`}
+              style={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+              }}
+            />
           </div>
 
           {/* contact button */}
@@ -120,7 +150,17 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="block py-3 text-white/80 hover:text-white transition-colors text-sm font-medium"
+                className={`relative block py-3 transition-colors text-sm font-medium
+                  text-white/80 hover:text-white
+                  after:absolute after:left-0 after:bottom-1
+                  after:h-[2.5px] after:rounded-full after:bg-[#E55C24]
+                  after:transition-all after:duration-300 after:ease-in-out
+                  ${
+                    pathname === link.href
+                      ? "after:w-full"
+                      : "after:w-0 hover:after:w-full"
+                  }
+                `}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

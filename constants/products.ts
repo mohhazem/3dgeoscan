@@ -18,7 +18,7 @@ export const products: Product[] = [
     title: "FARO® Orbis™ Premium",
     logos: ["sphere-xg.jpg","scene.png"],
     description:
-      "FARO Orbis 2 in 1 Mobile Laser Scanner and stationery scanner all in one device. A unique mobile scanning solution created to optimize workflows and elevate productivity. scan while moving with 6 mm accuracy and you can stop for 15 seconds to scan a station with accuracy 2 mm, Designed for construction, engineering and surveying professionals, Orbis delivers rapid speed of capture, while returning highly accurate 3D visual representations of the real world thru 360 camera for point cloud colorization.",
+      "FARO Orbis 2 in 1 Mobile Laser Scanner and stationery scanner all in one device. A unique mobile scanning solution created to optimize workflows and elevate productivity. scan while moving with 5 mm accuracy and you can stop for 15 seconds to scan a station with accuracy 2 mm, Designed for construction, engineering and surveying professionals, Orbis delivers rapid speed of capture, while returning highly accurate 3D visual representations of the real world thru 360 camera for point cloud colorization.",
     productImage: "/images/product-10.png",
     packageIncludes: [
       "Scanner",
@@ -79,7 +79,7 @@ export const products: Product[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     slug: "faro-sphere-xg",
     title: "FARO Sphere® XG",
     logos: ["sphere-xg.jpg"],
@@ -102,7 +102,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 5,
+    id: 6,
     slug: "faro-as-built",
     title: "FARO® As-Built™ Software",
     logos: ["as-built-suite.jpg"],
@@ -124,7 +124,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 6,
+    id: 7,
     slug: "faro-buildit-construction",
     title: "FARO® BuildIT Construction",
     logos: ["built-it.jpg"],
@@ -147,7 +147,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: 7,
+    id: 4,
     slug: "faro-scene",
     title: "FARO® SCENE Software",
     logos: ["scene.png"],

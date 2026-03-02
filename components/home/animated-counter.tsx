@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 
-// --- 1. Custom Hook: allowReEntry = true ---
+// --- Custom Hook ---
 function useIsInView(ref: React.RefObject<HTMLElement | null>) {
   const [isIntersecting, setIntersecting] = useState(false);
 
@@ -12,10 +12,9 @@ function useIsInView(ref: React.RefObject<HTMLElement | null>) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Update state whenever visibility changes (In OR Out)
         setIntersecting(entry.isIntersecting);
       },
-      { threshold: 0.3 } 
+      { threshold: 0.3 }
     );
 
     observer.observe(currentRef);
@@ -36,15 +35,15 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
-export default function AnimatedCounter({ 
-  end, 
-  duration = 2000, 
+export default function AnimatedCounter({
+  end,
+  duration = 2000,
   unit = "",
-  suffix = "", 
-  className = "" 
+  suffix = "",
+  className = "",
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
-  const [isCompleted, setIsCompleted] = useState(false); 
+  const [hasStarted, setHasStarted] = useState(false); // ✅ triggers on first frame
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useIsInView(ref);
 
@@ -52,7 +51,7 @@ export default function AnimatedCounter({
     // CASE 1: Scroll OUT -> Reset everything
     if (!inView) {
       setCount(0);
-      setIsCompleted(false); // <--- This fixes your issue
+      setHasStarted(false);
       return;
     }
 
@@ -61,9 +60,12 @@ export default function AnimatedCounter({
     let animationFrameId: number;
 
     const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
+      if (!startTime) {
+        startTime = timestamp;
+        setHasStarted(true); // ✅ Show unit/suffix immediately on first frame
+      }
+
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
       const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(easeOut * end));
 
@@ -71,7 +73,6 @@ export default function AnimatedCounter({
         animationFrameId = requestAnimationFrame(animate);
       } else {
         setCount(end);
-        setIsCompleted(true); // Trigger the "pop" only at the end
       }
     };
 
@@ -81,18 +82,31 @@ export default function AnimatedCounter({
   }, [inView, end, duration]);
 
   return (
-    <span ref={ref} className={`tabular-nums flex items-baseline ${className}`}>
+    <span
+      ref={ref}
+      className={`tabular-nums flex items-baseline ${className}`}
+    >
       {count.toLocaleString()}
-      {unit
-        && <span className={`text-gray-900 transition-all duration-500 ease-out
-          ${isCompleted ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3'}`
-        }>{unit}</span>
-      }
-      {suffix && (
-        <span 
+
+      {/* Unit - visible from first frame */}
+      {unit && (
+        <span
           className={`
-            ml-1 text-[#F36F21] inline-block origin-center transition-all duration-500 ease-out
-            ${isCompleted ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3'}
+            text-gray-900 transition-all duration-300 ease-out
+            ${hasStarted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-3"}
+          `}
+        >
+          {unit}
+        </span>
+      )}
+
+      {/* Suffix - visible from first frame */}
+      {suffix && (
+        <span
+          className={`
+            ml-1 text-[#F36F21] inline-block origin-center
+            transition-all duration-300 ease-out
+            ${hasStarted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-3"}
           `}
         >
           {suffix}

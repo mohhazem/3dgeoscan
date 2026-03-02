@@ -4,45 +4,40 @@ import { useRouter } from 'next/navigation';
 import { products } from '@/constants/products';
 
 export default function Products() {
-    // Brand color for consistency
     const brandColorClass = 'text-orange-600';
     const brandBgClass = 'bg-[#E55C24]';
 
-    // Animation state - using status for 3-step transition (exit → teleport → enter)
     const [status, setStatus] = useState<'idle' | 'exiting' | 'teleporting'>('idle');
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
-
     const router = useRouter();
 
-    // State for carousel
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Navigation handlers
     const handleNext = () => {
         setSlideDirection('right');
-        setStatus('exiting'); // Step 1: Slide current card left
+        setStatus('exiting');
 
         setTimeout(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
-            setStatus('teleporting'); // Step 2: Instantly position new card on right
+            setStatus('teleporting');
 
             setTimeout(() => {
-                setStatus('idle'); // Step 3: Slide new card from right to center
+                setStatus('idle');
             }, 50);
         }, 500);
     };
 
     const handlePrev = () => {
         setSlideDirection('left');
-        setStatus('exiting'); // Step 1: Slide current card right
+        setStatus('exiting');
 
         setTimeout(() => {
             setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
-            setStatus('teleporting'); // Step 2: Instantly position new card on left
+            setStatus('teleporting');
 
             setTimeout(() => {
-                setStatus('idle'); // Step 3: Slide new card from left to center
+                setStatus('idle');
             }, 50);
         }, 500);
     };
@@ -66,7 +61,6 @@ export default function Products() {
     const currentProduct = products[currentIndex];
 
     return (
-        // Kept original Section & Container classes
         <section id='products' className="min-h-screen md:h-screen md:snap-start flex items-center bg-white py-10 md:pt-20 md:pb-0">
             <div className="max-w-7xl mx-auto px-4 w-full">
 
@@ -85,13 +79,13 @@ export default function Products() {
                         </svg>
                     </button>
 
-                    {/* Overflow wrapper for slide effect - doesn't affect arrows */}
+                    {/* Overflow wrapper for slide effect */}
                     <div className="overflow-hidden w-full">
-                        {/* Main Grid Content: Changed from 3 columns to 2 columns */}
+                        {/* Main Grid Content */}
                         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full min-h-[350px] md:min-h-[450px] ${status === 'exiting'
                             ? 'transition-all duration-500 ease-in-out ' + (slideDirection === 'right' ? '-translate-x-full opacity-0' : 'translate-x-full opacity-0')
                             : status === 'teleporting'
-                                ? (slideDirection === 'right' ? 'translate-x-full' : '-translate-x-full') // No transition during teleport
+                                ? (slideDirection === 'right' ? 'translate-x-full' : '-translate-x-full')
                                 : 'transition-all duration-500 ease-in-out translate-x-0 opacity-100'
                             }`}>
 
@@ -108,26 +102,19 @@ export default function Products() {
                             {/* --- Column 2: Product Details --- */}
                             <div className="flex flex-col justify-center h-full">
 
-                                {/* Title & Logos */}
-                                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">{currentProduct.title}</h3>
-
-                                {/* Simple Logo/Badge placeholder row */}
-                                <div className="flex items-center gap-4 mb-4">
-                                    {currentProduct.logos.map((logo, i) => (
-                                        // <span key={i} className="font-bold text-gray-700 text-sm tracking-widest uppercase border border-gray-300 px-2 py-1 rounded">
-                                        //     {logo}
-                                        // </span>
-                                        <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
-                                    ))}
-                                </div>
+                                {/* Title */}
+                                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+                                    {currentProduct.title}
+                                </h3>
 
                                 {/* Description */}
                                 <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8 line-clamp-3">
                                     {currentProduct.description}
                                 </p>
 
-                                {/* Two-Column List Section (Package & Software) */}
+                                {/* Two-Column List Section (Package Includes & Logos) */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 md:gap-y-6 mb-6 md:mb-8">
+
                                     {/* Package Includes */}
                                     <div>
                                         <h4 className="font-bold text-gray-900 mb-3">Package Includes</h4>
@@ -141,15 +128,16 @@ export default function Products() {
                                         </ul>
                                     </div>
 
-                                    {/* Software */}
+                                    {/* Logos */}
                                     <div>
                                         <h4 className="font-bold text-gray-900 mb-3">Software</h4>
-                                        {currentProduct.software.map((item, idx) => (
-                                            <p key={idx} className="text-sm text-gray-600">
-                                                {item}
-                                            </p>
-                                        ))}
+                                        <div className="flex flex-wrap items-center gap-3">
+                                            {currentProduct.logos.map((logo, i) => (
+                                                <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
+                                            ))}
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 {/* CTA Buttons */}
@@ -167,6 +155,7 @@ export default function Products() {
                             </div>
                         </div>
                     </div>
+
                     {/* Right Navigation Arrow */}
                     <button onClick={handleNext} aria-label="Next" className="absolute top-32 md:bottom-32 right-2 md:-right-12 lg:-right-16 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-12 md:h-12">

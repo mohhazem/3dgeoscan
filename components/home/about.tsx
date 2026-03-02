@@ -23,7 +23,7 @@ export default function About() {
 
           {/* left side - text */}
           <div>
-            <span className="text-sm font-bold text-orange-500 mb-8">
+            <span className="text-xl font-bold text-orange-500 mb-8">
               About us
             </span>
 
@@ -34,7 +34,7 @@ export default function About() {
             <p className="text-gray-600 mb-6 leading-relaxed ">
               3D Geoscan is an Egyptian company delivering reliable,
               state-of-the-art 3D geospatial and 3D modeling solutions.
-              We don't dabble—we provide full end-to-end services
+              We provide full end-to-end services
               using the latest technologies from trusted, market-leading brands.
             </p>
 
@@ -46,7 +46,8 @@ export default function About() {
               Our portfolio of
               3D solutions includes (but not limited to)
               Mobile Data Collection, 3D Scanning, 3D Printing, Ground
-              Penetrating Radar, and Pipeline Mapping.
+              Penetrating Radar, and Pipeline Mapping.</p>
+              <p className="text-gray-600  leading-relaxed">
               The result? Higher
               quality outputs, faster project delivery, and
               productivity boosts that make timelines shorter and results

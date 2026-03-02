@@ -30,7 +30,7 @@ export default function Services() {
             ),
         },
         {
-            title: "Underground Utilities",
+            title: "Underground Utilities Mapping",
             description:
                 "Advanced detection and mapping of underground utilities including pipes, cables, and infrastructure. Prevent costly damages and ensure safe excavation with precise subsurface mapping.",
             dark: false,
@@ -102,7 +102,7 @@ export default function Services() {
             ),
         },
         {
-            title: "Digital Twin",
+            title: "Digital Twin & Facility Management",
             description:
                 "Create dynamic virtual replicas of physical assets and environments. Enable real-time monitoring, simulation, and predictive maintenance for enhanced decision-making and asset management.",
             dark: false,
@@ -162,7 +162,7 @@ export default function Services() {
     return (
         <section id="services" className="min-h-screen md:h-screen md:snap-start flex items-center bg-white py-10 md:pt-20 md:pb-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                <span className="text-sm font-bold text-orange-500 mb-8">Services</span>
+                <span className="text-xl font-bold text-orange-500 mb-8">Services</span>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">Comprehensive 3D Geospatial Solutions</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

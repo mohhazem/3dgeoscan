@@ -42,8 +42,9 @@ export default function Service1() {
 
     // Application Industries Data
     const applications = [
-        { icon: "building", name: "Industry-AEC" },
-        { icon: "building", name: "Oil and Gas-Heritage" },
+        { icon: "building", name: "Industry" },
+        { icon: "building", name: "AEC" },
+        { icon: "building", name: "Oil and Gas" },
         { icon: "building", name: "Heritage" },
         { icon: "building", name: "Archeology" },
         { icon: "building", name: "Urban assets" },
