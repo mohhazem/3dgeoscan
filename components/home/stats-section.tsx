@@ -27,8 +27,7 @@ const StatsSection = () => {
                 Industry-Leading Capabilities
               </h2>
               <p className="text-[#AEAEAE] leading-relaxed">
-                With the latest equipment of laser scanning in the MENA
-                region and a team of certified professionals, we deliver
+                With the latest equipment of laser scanners and a team of certified professionals, we deliver
                 unmatched precision and efficiency on every project
               </p>
             </div>
