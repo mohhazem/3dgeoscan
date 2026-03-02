@@ -9,9 +9,9 @@ export default function OurWork() {
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
                 <div className="text-center mb-12">
-                    <span className="text-sm font-bold text-orange-500 mb-4 block">Our Work</span>
+                    <span className="text-2xl font-bold text-orange-500 mb-4 block">Our Work</span>
                     <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                        Measured. Modeled. <span className="text-orange-500">Delivered.</span>
+                        Scanned. Modeled. <span className="text-orange-500">Delivered.</span>
                     </h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">
                         Explore how we've helped clients across industries capture reality with precision 3D
@@ -37,11 +37,7 @@ export default function OurWork() {
                         {/* Project Details */}
                         <div className="mt-6">
                             <h3 className="text-2xl font-bold text-gray-900 mb-3">{project.name}</h3>
-                            <p className="text-gray-600 mb-6">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat
-                            </p>
+                            
 
                             {/* Project Tags */}
                             <div className="flex flex-wrap gap-3 mb-6">
