@@ -6,7 +6,6 @@ import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
-  // { label: "About us", href: "/#about" },
   { label: "Products", href: "/products" },
   { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
@@ -15,8 +14,10 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [activeStyle, setActiveStyle] = useState({ left: 0, width: 0 });
+  const [hoverStyle, setHoverStyle] = useState({ left: 0, width: 0 });
   const [indicatorReady, setIndicatorReady] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
@@ -38,7 +39,7 @@ export default function Navbar() {
     if (activeLink && navContainer) {
       const navRect = navContainer.getBoundingClientRect();
       const linkRect = activeLink.getBoundingClientRect();
-      setIndicatorStyle({
+      setActiveStyle({
         left: linkRect.left - navRect.left,
         width: linkRect.width,
       });
@@ -47,6 +48,27 @@ export default function Navbar() {
       setIndicatorReady(false);
     }
   }, [pathname]);
+
+  // The indicator follows hover when hovering, otherwise snaps to active
+  const indicatorStyle = isHovering ? hoverStyle : activeStyle;
+
+  const handleMouseEnter = (href: string) => {
+    const link = linkRefs.current[href];
+    const navContainer = navRef.current;
+    if (link && navContainer) {
+      const navRect = navContainer.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      setHoverStyle({
+        left: linkRect.left - navRect.left,
+        width: linkRect.width,
+      });
+      setIsHovering(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
 
   return (
     <nav
@@ -73,7 +95,11 @@ export default function Navbar() {
           </Link>
 
           {/* desktop menu */}
-          <div ref={navRef} className="hidden md:flex items-center gap-8 relative">
+          <div
+            ref={navRef}
+            className="hidden md:flex items-center gap-8 relative"
+            onMouseLeave={handleMouseLeave}
+          >
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -81,6 +107,7 @@ export default function Navbar() {
                 ref={(el: HTMLAnchorElement | null) => {
                   linkRefs.current[link.href] = el;
                 }}
+                onMouseEnter={() => handleMouseEnter(link.href)}
                 className={`relative transition-colors text-sm font-medium pb-1 ${
                   isSolid
                     ? "text-gray-900 hover:text-gray-700"
@@ -94,7 +121,7 @@ export default function Navbar() {
             {/* sliding indicator */}
             <span
               className={`absolute bottom-0 h-[2.5px] rounded-full bg-[#E55C24] transition-all duration-300 ease-in-out ${
-                indicatorReady ? "opacity-100" : "opacity-0"
+                indicatorReady || isHovering ? "opacity-100" : "opacity-0"
               }`}
               style={{
                 left: indicatorStyle.left,
@@ -118,26 +145,11 @@ export default function Navbar() {
             className={`md:hidden ${isSolid ? "text-gray-900" : "text-white"}`}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
@@ -155,11 +167,7 @@ export default function Navbar() {
                   after:absolute after:left-0 after:bottom-1
                   after:h-[2.5px] after:rounded-full after:bg-[#E55C24]
                   after:transition-all after:duration-300 after:ease-in-out
-                  ${
-                    pathname === link.href
-                      ? "after:w-full"
-                      : "after:w-0 hover:after:w-full"
-                  }
+                  ${pathname === link.href ? "after:w-full" : "after:w-0 hover:after:w-full"}
                 `}
                 onClick={() => setIsOpen(false)}
               >

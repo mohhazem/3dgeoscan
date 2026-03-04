@@ -22,10 +22,8 @@ export default function OurWork() {
                 {projects.map((project, idx) => (
                     <div id={`project-${project.id}`} key={project.id} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
                         {/* Image Container */}
-                        <div
-                            className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden cursor-ew-resize select-none"
-                        >
-                            {/* Project Image*/}
+                        <div className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden cursor-ew-resize select-none">
+                            {/* Project Image */}
                             <div className="absolute inset-0">
                                 <img
                                     src={project.image}
@@ -33,11 +31,34 @@ export default function OurWork() {
                                     className="w-full h-full object-cover"
                                 />
                             </div>
+
+                            {/* Video Button — bottom left */}
+                            {project.videoUrl && (
+                                <a
+                                    href={project.videoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-black/60 hover:bg-orange-500 backdrop-blur-sm text-white px-4 py-2.5 rounded-full transition-all duration-300 group"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    {/* Play Icon */}
+                                    <div className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center flex-shrink-0">
+                                        <svg
+                                            className="w-3.5 h-3.5 text-white translate-x-0.5"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-sm font-medium">Watch Video</span>
+                                </a>
+                            )}
                         </div>
+
                         {/* Project Details */}
                         <div className="mt-6">
                             <h3 className="text-2xl font-bold text-gray-900 mb-3">{project.name}</h3>
-                            
 
                             {/* Project Tags */}
                             <div className="flex flex-wrap gap-3 mb-6">
@@ -76,7 +97,6 @@ export default function OurWork() {
 
                             {/* Challenge & Solution Cards */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {/* Challenge Card */}
                                 <div className="bg-gray-50 rounded-xl p-4 border border-gray-300">
                                     <h4 className="font-bold text-gray-900 mb-3">Challenge</h4>
                                     <p className="text-gray-600 text-sm">
@@ -84,8 +104,6 @@ export default function OurWork() {
                                         do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                     </p>
                                 </div>
-
-                                {/* Solution Card */}
                                 <div className="bg-orange-50 rounded-xl p-4 border border-orange-500">
                                     <h4 className="font-bold text-orange-500 mb-3">Solution</h4>
                                     <p className="text-gray-600 text-sm">

@@ -1,6 +1,7 @@
 export type Product = {
   id: number;
   slug: string;
+  type: "hardware" | "software"; // ← add this
   title: string;
   logos: string[];
   description: string;
@@ -8,13 +9,14 @@ export type Product = {
   packageIncludes: string[];
   software: string[];
   sketchfabUrl: string;
-  keyFeatures?: string[];  // Add this
+  keyFeatures?: string[];
 };
 
 export const products: Product[] = [
   {
     id: 1,
     slug: "faro-orbis",
+    type: "hardware", // ← hardware
     title: "FARO® Orbis™ Premium",
     logos: ["sphere-xg.jpg","scene.png"],
     description:
@@ -37,6 +39,7 @@ export const products: Product[] = [
   {
     id: 2,
     slug: "faro-focus",
+    type: "hardware", // ← hardware
     title: "FARO® Focus",
     logos: ["sphere-xg.jpg","scene.png"],
     description:
@@ -59,6 +62,7 @@ export const products: Product[] = [
   {
     id: 3,
     slug: "faro-blink",
+    type: "hardware", // ← hardware
     title: "FARO® Blink™",
     logos: ["sphere-xg.jpg","scene.png"],
     description:
@@ -81,6 +85,7 @@ export const products: Product[] = [
   {
     id: 5,
     slug: "faro-sphere-xg",
+    type: "software", // ← software
     title: "FARO Sphere® XG",
     logos: ["sphere-xg.jpg"],
     description:
@@ -92,7 +97,7 @@ export const products: Product[] = [
       "Collaborative Workspace",
       "Unlimited Cloud Storage"
     ],
-    software: ["SaaS Platform"],
+    software: [],
     sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Cloud-based Data Centralization",
@@ -104,6 +109,7 @@ export const products: Product[] = [
   {
     id: 6,
     slug: "faro-as-built",
+    type: "software", // ← software
     title: "FARO® As-Built™ Software",
     logos: ["as-built-suite.jpg"],
     description:
@@ -114,7 +120,7 @@ export const products: Product[] = [
       "As-Built for Revit",
       "As-Built Modeler"
     ],
-    software: ["Plugin for AutoCAD & Revit"],
+    software: [],
     sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Seamless Integration with AutoCAD & Revit",
@@ -126,6 +132,7 @@ export const products: Product[] = [
   {
     id: 7,
     slug: "faro-buildit-construction",
+    type: "software", // ← software
     title: "FARO® BuildIT Construction",
     logos: ["built-it.jpg"],
     description:
@@ -137,7 +144,7 @@ export const products: Product[] = [
       "Analysis Modules",
       "Export Utilities"
     ],
-    software: ["Standalone Verification Software"],
+    software: [],
     sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Real-time Design to Build Comparison",
@@ -149,6 +156,7 @@ export const products: Product[] = [
   {
     id: 4,
     slug: "faro-scene",
+    type: "software", // ← software
     title: "FARO® SCENE Software",
     logos: ["scene.png"],
     description:
@@ -160,7 +168,7 @@ export const products: Product[] = [
       "WebShare Cloud Access",
       "Export Utilities"
     ],
-    software: ["Point Cloud Processing"],
+    software: [],
     sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Automatic Scan Registration",
