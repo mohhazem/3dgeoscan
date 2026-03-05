@@ -167,7 +167,7 @@ export const products: Product[] = [
       "VR View Module",
       "WebShare Cloud Access",
       "Export Utilities"
-    ],
+    ], 
     software: [],
     sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [

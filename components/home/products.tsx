@@ -107,6 +107,13 @@ export default function Products() {
                                     {currentProduct.title}
                                 </h3>
 
+                                {/* Software Badge — only shown for software products */}
+                                {currentProduct.type === 'software' && (
+                                    <span className="inline-block text-sm font-semibold text-[#E55C24] uppercase tracking-widest mb-3">
+                                        Software
+                                    </span>
+                                )}
+
                                 {/* Description */}
                                 <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8 line-clamp-3">
                                     {currentProduct.description}
@@ -128,15 +135,17 @@ export default function Products() {
                                         </ul>
                                     </div>
 
-                                    {/* Logos */}
-                                    <div>
-                                        <h4 className="font-bold text-gray-900 mb-3">Software</h4>
-                                        <div className="flex flex-wrap items-center gap-3">
-                                            {currentProduct.logos.map((logo, i) => (
-                                                <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
-                                            ))}
+                                    {/* Logos — only shown for hardware products */}
+                                    {currentProduct.type === 'hardware' && (
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 mb-3">Software</h4>
+                                            <div className="flex flex-wrap items-center gap-3">
+                                                {currentProduct.logos.map((logo, i) => (
+                                                    <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                 </div>
 
