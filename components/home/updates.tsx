@@ -67,7 +67,7 @@ export default function LatestNews() {
 
                 {/* Header */}
                 {/* <div className="mb-12"> */}
-                    <span className="text-sm font-bold text-orange-500 mb-8">
+                    <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">
                         News & Updates
                     </span>
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 leading-tight">
