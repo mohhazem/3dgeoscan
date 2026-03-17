@@ -11,7 +11,8 @@ export default function ContactSection() {
         "3D Scanning",
         "Underground Utilities",
         "Digital Twin",
-        "Geophysical Studies"
+        "Geophysical Studies",
+        "Other"
     ];
     
     const toggleService = (service: string) => {

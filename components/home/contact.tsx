@@ -89,10 +89,15 @@ export default function Contact() {
       </div>
 
       {/* Carousel */}
-      <div className="relative z-10 w-full mb-16 overflow-hidden">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-black/60 to-transparent z-10 pointer-events-none" />
+      <div
+        className="relative z-10 w-full mb-16 overflow-hidden bg-white"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
+      >
 
         <div ref={trackRef} className="flex items-center gap-10 w-max py-4">
           {allPartners.map((partner, index) => (
