@@ -23,7 +23,7 @@ export default function About() {
 
           {/* left side - text */}
           <div>
-            <span className="text-xl font-bold text-orange-500 mb-8">
+            <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">
               About us
             </span>
 

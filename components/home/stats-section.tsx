@@ -8,8 +8,8 @@ const StatsSection = () => {
   const stats = [
     { value: '60', suffix: '+', label: 'Projects' },
     { value: '100', suffix: '+', label: 'TB Storage' },
-    { value: '10', unit: 'M', suffix: '+', label: 'm² Scanned' },
-    { value: '7', unit: 'M', suffix: '+', label: 'm² Digitized' }
+    { value: '10000000', suffix: '+', label: 'm² Scanned' },
+    { value: '7000000', suffix: '+', label: 'm² Digitized' }
   ];
 
   return (
@@ -22,7 +22,7 @@ const StatsSection = () => {
               <Polymesh />
             </div>
             <div className="relative z-10 flex flex-col justify-center h-full p-6 md:p-8 lg:p-12">
-              <span className="text-sm font-bold text-orange-500 mb-4">Why choose us</span>
+              <span className="text-sm md:text-lg font-bold text-orange-500 mb-4">Why choose us</span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
                 Industry-Leading Capabilities
               </h2>
@@ -41,9 +41,9 @@ const StatsSection = () => {
                   <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 ml-2 flex justify-center">
                     <AnimatedCounter
                       end={parseInt(stat.value.replace(/,/g, ''))}
-                      unit={stat.unit}
+                      // unit={stat.unit}
                       suffix={stat.suffix}
-                      duration={1500} // You can tweak speed here
+                      duration={750} // You can tweak speed here
                     />
                   </div>
                   <div className="text-sm md:text-base text-gray-600">
