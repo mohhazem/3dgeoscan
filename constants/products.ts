@@ -1,7 +1,7 @@
 export type Product = {
   id: number;
   slug: string;
-  type: "hardware" | "software"; // ← add this
+  type: "hardware" | "software";
   title: string;
   logos: string[];
   description: string;
@@ -10,15 +10,16 @@ export type Product = {
   software: string[];
   sketchfabUrl: string;
   keyFeatures?: string[];
+  brochure?: string; // ✅ added
 };
 
 export const products: Product[] = [
   {
     id: 1,
     slug: "faro-orbis",
-    type: "hardware", // ← hardware
+    type: "hardware",
     title: "FARO® Orbis™ Premium",
-    logos: ["sphere-xg.jpg","scene.png"],
+    logos: ["sphere-xg.jpg", "scene.png"],
     description:
       "FARO Orbis 2 in 1 Mobile Laser Scanner and stationery scanner all in one device. A unique mobile scanning solution created to optimize workflows and elevate productivity. scan while moving with 5 mm accuracy and you can stop for 15 seconds to scan a station with accuracy 2 mm, Designed for construction, engineering and surveying professionals, Orbis delivers rapid speed of capture, while returning highly accurate 3D visual representations of the real world thru 360 camera for point cloud colorization.",
     productImage: "/images/product-10.png",
@@ -28,20 +29,21 @@ export const products: Product[] = [
       "Charging Dock",
       "Protective Carry Case",
     ],
-    software: ["FARO Sphere® XG","FARO® SCENE Software"],
+    software: ["FARO Sphere® XG", "FARO® SCENE Software"],
     sketchfabUrl:
       "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Lightweight and Easy-to-Use",
       "Engineered for the Toughest Environments",
     ],
+    brochure: "/brochures/Orbis premium to print brochure.pdf", // ✅
   },
   {
     id: 2,
     slug: "faro-focus",
-    type: "hardware", // ← hardware
+    type: "hardware",
     title: "FARO® Focus",
-    logos: ["sphere-xg.jpg","scene.png"],
+    logos: ["sphere-xg.jpg", "scene.png"],
     description:
       "Your tool to capture, view and understand the world around you. Great for indoor and outdoor use, including spaces where features are positioned further apart. Lightweight and rugged, simple to use, fast to capture and easy to process giving you the most accurate information you need to make the most important decisions.",
     productImage: "/images/product-4.png",
@@ -51,20 +53,21 @@ export const products: Product[] = [
       "Charging Dock",
       "Protective Carry Case",
     ],
-    software: ["FARO Sphere® XG","FARO® SCENE Software"],
+    software: ["FARO Sphere® XG", "FARO® SCENE Software"],
     sketchfabUrl:
       "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "high-speed SSD data storage",
       "Withstand the harshest environments daily",
     ],
+    brochure: "/brochures/Focus premium brochure to print.pdf", // ✅
   },
   {
     id: 3,
     slug: "faro-blink",
-    type: "hardware", // ← hardware
+    type: "hardware",
     title: "FARO® Blink™",
-    logos: ["sphere-xg.jpg","scene.png"],
+    logos: ["sphere-xg.jpg", "scene.png"],
     description:
       "From site to insights, Blink is a reality capture solution designed for simplicity and accessibility. It brings high-quality visualization and automated workflows into the hands of designers, builders, surveyors, operators, and public safety professionals, helping teams capture, view, and share data seamlessly, regardless of expertise. With Blink, anyone can take control of reality capture on-site and move projects to final delivery efficiently.",
     productImage: "/images/product-5.png",
@@ -74,18 +77,19 @@ export const products: Product[] = [
       "Charging Dock",
       "Protective Carry Case",
     ],
-    software: ["FARO Sphere® XG","FARO® SCENE Software"],
+    software: ["FARO Sphere® XG", "FARO® SCENE Software"],
     sketchfabUrl:
       "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Guided Scanning with Real-Time Feedback",
       "Automatic Point Cloud Processing",
     ],
+    brochure: "/brochures/Blink Brochure to print.pdf", // ✅
   },
   {
     id: 5,
     slug: "faro-sphere-xg",
-    type: "software", // ← software
+    type: "software",
     title: "FARO Sphere® XG",
     logos: ["sphere-xg.jpg"],
     description:
@@ -95,21 +99,23 @@ export const products: Product[] = [
       "Cloud Platform Access",
       "Stream Mobile App Integration",
       "Collaborative Workspace",
-      "Unlimited Cloud Storage"
+      "Unlimited Cloud Storage",
     ],
     software: [],
-    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    sketchfabUrl:
+      "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Cloud-based Data Centralization",
       "Real-time Project Collaboration",
       "4D Progress Management (Time Travel)",
-      "Integration with Stream Mobile App"
-    ]
+      "Integration with Stream Mobile App",
+    ],
+    // no brochure for software products (optional)
   },
   {
     id: 6,
     slug: "faro-as-built",
-    type: "software", // ← software
+    type: "software",
     title: "FARO® As-Built™ Software",
     logos: ["as-built-suite.jpg"],
     description:
@@ -118,21 +124,22 @@ export const products: Product[] = [
     packageIncludes: [
       "As-Built for AutoCAD",
       "As-Built for Revit",
-      "As-Built Modeler"
+      "As-Built Modeler",
     ],
     software: [],
-    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    sketchfabUrl:
+      "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Seamless Integration with AutoCAD & Revit",
       "Automated Clash Detection",
       "Efficient Point Cloud Processing",
-      "BIM Model Creation & Validation"
-    ]
+      "BIM Model Creation & Validation",
+    ],
   },
   {
     id: 7,
     slug: "faro-buildit-construction",
-    type: "software", // ← software
+    type: "software",
     title: "FARO® BuildIT Construction",
     logos: ["built-it.jpg"],
     description:
@@ -142,21 +149,22 @@ export const products: Product[] = [
       "BuildIT Construction License",
       "Real-time Comparison Tools",
       "Analysis Modules",
-      "Export Utilities"
+      "Export Utilities",
     ],
     software: [],
-    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    sketchfabUrl:
+      "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Real-time Design to Build Comparison",
       "Floor Flatness Analysis (ASTM/TR34)",
       "Tank Deformation Analysis",
-      "Prefabricated Component Inspection"
-    ]
+      "Prefabricated Component Inspection",
+    ],
   },
   {
     id: 4,
     slug: "faro-scene",
-    type: "software", // ← software
+    type: "software",
     title: "FARO® SCENE Software",
     logos: ["scene.png"],
     description:
@@ -166,15 +174,16 @@ export const products: Product[] = [
       "SCENE Software License",
       "VR View Module",
       "WebShare Cloud Access",
-      "Export Utilities"
-    ], 
+      "Export Utilities",
+    ],
     software: [],
-    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
+    sketchfabUrl:
+      "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
     keyFeatures: [
       "Automatic Scan Registration",
       "Target-less Positioning",
       "Virtual Reality (VR) View",
-      "WebShare Cloud Integration"
-    ]
+      "WebShare Cloud Integration",
+    ],
   },
 ];
