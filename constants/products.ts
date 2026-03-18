@@ -36,7 +36,7 @@ export const products: Product[] = [
       "Lightweight and Easy-to-Use",
       "Engineered for the Toughest Environments",
     ],
-    brochure: "/brochures/Orbis premium to print brochure.pdf", // ✅
+    brochure: "/brochures/FARO® Orbis™ Premium Brochure.pdf", // ✅
   },
   {
     id: 2,
@@ -84,7 +84,7 @@ export const products: Product[] = [
       "Guided Scanning with Real-Time Feedback",
       "Automatic Point Cloud Processing",
     ],
-    brochure: "/brochures/Blink Brochure to print.pdf", // ✅
+    brochure: "/brochures/FARO® Blink™ Brochure.pdf", // ✅
   },
   {
     id: 4,
@@ -185,28 +185,5 @@ export const products: Product[] = [
       "Prefabricated Component Inspection",
     ],
   },
-  {
-    id: 4,
-    slug: "faro-scene",
-    type: "software", // ← software
-    title: "FARO® SCENE Software",
-    logos: ["scene.png"],
-    description:
-      "FARO SCENE software is specifically designed to process and manage scan data from FARO laser scanners. It utilizes automatic object recognition and registration to produce high-quality data. SCENE allows users to combine scans, colorize point clouds, and export data to various formats, featuring an immersive Virtual Reality (VR) view for data evaluation.",
-    productImage: "/images/product-9.jpg",
-    packageIncludes: [
-      "SCENE Software License",
-      "VR View Module",
-      "WebShare Cloud Access",
-      "Export Utilities"
-    ], 
-    software: [],
-    sketchfabUrl: "https://sketchfab.com/models/282954bbc43c416fac30eb458a6afd0e/embed",
-    keyFeatures: [
-      "Automatic Scan Registration",
-      "Target-less Positioning",
-      "Virtual Reality (VR) View",
-      "WebShare Cloud Integration"
-    ]
-  },
+
 ];
