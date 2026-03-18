@@ -45,7 +45,7 @@ export default function Projects() {
                         </div>
                     </Link>
 
-                    {projects.slice(2).map((project, idx) => (
+                    {projects.slice(2,6).map((project, idx) => (
                         <Link key={idx} href={`/projects#project-${project.id}`} className="relative rounded-2xl overflow-hidden group cursor-pointer h-40 md:h-48 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl border-4 border-transparent hover:border-orange-500 card">
                             <img src={project.image || "/placeholder.svg"} alt="Project" className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">

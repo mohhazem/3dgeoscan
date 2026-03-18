@@ -81,15 +81,13 @@ function ProjectCard({ project }: { project: Project }) {
                     <div className="bg-gray-50 rounded-xl p-4 border border-gray-300">
                         <h4 className="font-bold text-gray-900 mb-3">Challenge</h4>
                         <p className="text-gray-600 text-sm">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            {project.challange}
                         </p>
                     </div>
                     <div className="bg-orange-50 rounded-xl p-4 border border-orange-500">
                         <h4 className="font-bold text-orange-500 mb-3">Solution</h4>
                         <p className="text-gray-600 text-sm">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            {project.solution}
                         </p>
                     </div>
                 </div>
