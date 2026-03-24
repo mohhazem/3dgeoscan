@@ -2,6 +2,7 @@
 
 import Polymesh from '@/components/layout/polymesh';
 import AnimatedCounter from './animated-counter';
+import GraphLine from '../layout/graph-line';
 
 const StatsSection = () => {
 
@@ -34,7 +35,7 @@ const StatsSection = () => {
           </div>
 
           {/* Right side - Stats grid */}
-          <div className="bg-white p-6 md:p-8 lg:p-12 flex items-center">
+          <div className="bg-white p-6 md:p-8 lg:p-12 flex flex-col justify-between items-center relative">
             <div className="grid grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
@@ -52,6 +53,7 @@ const StatsSection = () => {
                 </div>
               ))}
             </div>
+            <GraphLine />
           </div>
         </div>
       </div>
