@@ -106,7 +106,7 @@ export default function Contact() {
               className="flex-shrink-0 w-48 h-28 flex items-center justify-center"
             >
               <Image
-                src={`/images/partner-${partner.id}.png`}
+                src={`/images/partners/partner-${partner.id}.png`}
                 alt={partner.name}
                 width={180}
                 height={100}

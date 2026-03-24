@@ -42,9 +42,9 @@ export default function Service2() {
 
     // Application Industries Data
     const applications = [
-        { icon: "building", name: "Oil and gas (pipeline mapping)" },
-        { icon: "building", name: "Industrial and manufacturing (factory expansions)" },
-        { icon: "building", name: "Construction and infrastructure (Site preparation and urban redevelopment)" },
+        { icon: "png", src: "/Service_icons/Oil%20and%20Gas.png", name: "Oil and gas (pipeline mapping)" },
+        { icon: "png", src: "/Service_icons/Industry.png", name: "Industrial and manufacturing (factory expansions)" },
+        { icon: "building", src: "", name: "Construction and infrastructure (Site preparation and urban redevelopment)" },
     ];
 
     return (
@@ -52,7 +52,7 @@ export default function Service2() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                    {/* Left Side - Image Slider (SWAPPED) */}
+                    {/* Left Side - Image Slider */}
                     <div className="order-1">
                         <div
                             ref={containerRef}
@@ -103,7 +103,7 @@ export default function Service2() {
                         </div>
                     </div>
 
-                    {/* Right Side - Text Content (SWAPPED) */}
+                    {/* Right Side - Text Content */}
                     <div className="order-2">
                         {/* Main Title */}
                         <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -149,11 +149,17 @@ export default function Service2() {
                                         key={index}
                                         className="flex items-center gap-2 border border-gray-200 bg-white px-4 py-2 rounded-full hover:border-[#E85A2C] transition-colors"
                                     >
-                                        {app.icon === "location" ? (
-                                            <svg className="w-4 h-4 text-[#E85A2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
+                                        {app.icon === "png" ? (
+                                            <img
+                                                src={app.src}
+                                                alt={app.name}
+                                                width={20}
+                                                height={20}
+                                                className="object-contain w-5 h-5"
+                                                onError={(e) => {
+                                                    console.error(`Failed to load icon: ${app.src}`);
+                                                }}
+                                            />
                                         ) : (
                                             <svg className="w-4 h-4 text-[#E85A2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
