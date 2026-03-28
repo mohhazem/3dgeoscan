@@ -62,9 +62,22 @@ function NewsCard({ item }: { item: EventItem }) {
 export default function LatestNews() {
     const brandBgClass = "bg-[#E55C24]";
     const eventsCount = events.length;
-    const visibleCardsCount = 3;
 
     const [startIndex, setStartIndex] = useState(0);
+    const [cardsPerView, setCardsPerView] = useState(1);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+        const updateCardsPerView = () => {
+            setCardsPerView(mediaQuery.matches ? 3 : 1);
+        };
+
+        updateCardsPerView();
+        mediaQuery.addEventListener("change", updateCardsPerView);
+
+        return () => mediaQuery.removeEventListener("change", updateCardsPerView);
+    }, []);
 
     useEffect(() => {
         if (eventsCount === 0) {
@@ -93,7 +106,7 @@ export default function LatestNews() {
 
     const visibleEvents = eventsCount === 0
         ? []
-        : Array.from({ length: visibleCardsCount }, (_, offset) => {
+        : Array.from({ length: cardsPerView }, (_, offset) => {
             const index = (startIndex + offset) % eventsCount;
             return {
                 item: events[index],
@@ -128,7 +141,7 @@ export default function LatestNews() {
                     </button>
 
                     <div className="w-full px-8 md:px-10">
-                        <div className="grid grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {visibleEvents.map(({ item, key }) => (
                                 <NewsCard key={key} item={item} />
                             ))}
