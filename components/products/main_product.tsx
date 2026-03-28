@@ -25,6 +25,14 @@ export default function MainProduct({ product }: MainProductProps) {
         <section id="main-product" className="pt-6 pb-16 md:pb-20 bg-white scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 w-full">
 
+                {/* ✅ Photo above the grid */}
+                <div className="w-full mb-8 flex justify-center">
+                    <img
+                        src="/images/3dGeoscanFaro2.png"
+                        alt="Banner"
+                        className="h-[120px] md:h-[160px] object-contain"
+                    />
+                </div>
                 {/* Main Grid Content */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full min-h-[350px] md:min-h-[450px]">
 
