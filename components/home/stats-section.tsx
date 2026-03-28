@@ -35,8 +35,8 @@ const StatsSection = () => {
           </div>
 
           {/* Right side - Stats grid */}
-          <div className="bg-white p-6 md:p-8 lg:p-12 flex flex-col justify-between items-center relative">
-            <div className="grid grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full">
+          <div className="bg-white p-6 md:p-8 lg:p-12 flex justify-between items-center relative">
+            <div className="z-20 grid grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 ml-2 flex justify-center">

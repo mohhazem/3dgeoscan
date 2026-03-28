@@ -1,73 +1,40 @@
 "use client";
 import { useEffect, useState } from "react";
 import { events } from "@/constants/events";
+import Image from "next/image";
 
 type EventItem = (typeof events)[number];
 
 // News Card Component
 function NewsCard({ item }: { item: EventItem }) {
-    const imageIntervalMs = 3500;
-    const fadeDurationMs = 500;
-
+    const imageIntervalMs = 4000; // 4 seconds
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isImageVisible, setIsImageVisible] = useState(true);
-    const [isHovered, setIsHovered] = useState(false);
-
-    const imagesCount = item.images.length;
-    const currentImage = item.images[currentImageIndex] ?? item.images[0];
 
     useEffect(() => {
-        setCurrentImageIndex(0);
-        setIsImageVisible(true);
-    }, [item.id]);
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.images.length);
+        }, imageIntervalMs); // Change image every 4 seconds
 
-    useEffect(() => {
-        if (imagesCount <= 1 || isHovered) {
-            return;
-        }
-
-        const intervalId = setInterval(() => {
-            setIsImageVisible(false);
-        }, imageIntervalMs);
-
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [imagesCount, isHovered]);
-
-    useEffect(() => {
-        if (isImageVisible || imagesCount <= 1) {
-            return;
-        }
-
-        const timeoutId = setTimeout(() => {
-            setCurrentImageIndex((prev) => (prev + 1) % imagesCount);
-            setIsImageVisible(true);
-        }, fadeDurationMs);
-
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [isImageVisible, imagesCount]);
+        return () => clearInterval(interval);
+    }, [item.images.length]);
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
             {/* Image Container */}
             <div
                 className="relative h-40 md:h-64 overflow-hidden"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
             >
-                {currentImage ? (
-                    <img
-                        src={currentImage}
-                        alt={item.title}
-                        className={`w-full h-full object-cover hover:scale-105 transition-all duration-300 ${isImageVisible ? "opacity-100" : "opacity-0"}`}
-                        style={{ transitionDuration: `${fadeDurationMs}ms` }}
+                {item.images.map((image, index) => (
+                    <Image
+                        key={index}
+                        src={image}
+                        alt={`${item.title} - Image ${index + 1}`}
+                        fill
+                        className={`object-cover transition-opacity duration-1000 ${index === currentImageIndex ? "opacity-100" : "opacity-0"
+                            }`}
+                        priority={index === 0}
                     />
-                ) : (
-                    <div className="w-full h-full bg-gray-100" />
-                )}
+                ))}
             </div>
 
             {/* News Details */}
@@ -83,7 +50,7 @@ function NewsCard({ item }: { item: EventItem }) {
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
+                <p className="text-gray-600 text-sm leading-relaxed line-clamp-4" title={item.description}>
                     {item.description}
                 </p>
             </div>
@@ -122,18 +89,6 @@ export default function LatestNews() {
         }
 
         setStartIndex((prev) => (prev - 1 + eventsCount) % eventsCount);
-    };
-
-    const handleDotClick = (index: number) => {
-        if (eventsCount === 0) {
-            return;
-        }
-
-        if (index === startIndex) {
-            return;
-        }
-
-        setStartIndex(index);
     };
 
     const visibleEvents = eventsCount === 0
@@ -190,19 +145,6 @@ export default function LatestNews() {
                         </svg>
                     </button>
                 </div>
-                {/* <div className="flex justify-center items-center gap-3 mt-8 md:mt-10">
-                    {events.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handleDotClick(index)}
-                            aria-label={`Go to slide ${index + 1}`}
-                            className={`w-3 h-3 rounded-full transition ${startIndex === index
-                                ? brandBgClass
-                                : "bg-gray-300 hover:bg-gray-400 cursor-pointer"
-                                }`}
-                        />
-                    ))}
-                </div> */}
             </div>
         </section>
     );

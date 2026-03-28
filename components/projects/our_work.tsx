@@ -15,7 +15,7 @@ type Project = (typeof projects)[number];
 function ProjectCard({ project }: { project: Project }) {
     return (
         <div id={`project-${project.id}`} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8 scroll-mt-28">
-            <div className="relative w-full h-75 md:h-100 rounded-xl overflow-hidden cursor-ew-resize select-none">
+            <div className="relative w-full h-75 md:h-100 rounded-xl overflow-hidden select-none">
                 <div className="absolute inset-0">
                     <img
                         src={project.image}

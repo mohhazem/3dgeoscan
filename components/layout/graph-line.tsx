@@ -11,8 +11,8 @@ export default function GraphLine() {
     const endX = lastPoint[0];
     const endY = lastPoint[1];
     return (
-        <div style={{ width: '100%', maxWidth }}>
-            <svg width="100%" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+        <div className='absolute z-10 h-full' style={{ width: '100%', maxWidth }}>
+            <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <style>
                         {`
@@ -47,12 +47,14 @@ export default function GraphLine() {
                         <line
                             x1="80" y1="240" x2="620" y2="240"
                             className="axis-stroke"
+                            vectorEffect="non-scaling-stroke" /* Add this! */
                             strokeWidth="1.5"
                             strokeLinecap="round"
                         />
                         <line
                             x1="80" y1="240" x2="80" y2="40"
                             className="axis-stroke"
+                            vectorEffect="non-scaling-stroke" /* Add this! */
                             strokeWidth="1.5"
                             strokeLinecap="round"
                         />
@@ -65,6 +67,7 @@ export default function GraphLine() {
                     fill="none"
                     stroke={color}
                     strokeWidth="3.5"
+                    vectorEffect="non-scaling-stroke" /* Add this! */
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     points={points}

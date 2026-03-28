@@ -1,14 +1,12 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { products } from '@/constants/products';
 
 export default function Products() {
     const brandColorClass = 'text-orange-600';
     const brandBgClass = 'bg-[#E55C24]';
     const transitionDurationMs = 500;
-
-    const router = useRouter();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -159,12 +157,12 @@ export default function Products() {
                                             <button className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}>
                                                 Get a Quote
                                             </button>
-                                            <button
-                                                onClick={() => router.push(`/products?product=${product.slug}`)}
+                                            <Link
+                                                href={`/products?product=${product.slug}`}
                                                 className="bg-white text-[#E55C24] border-2 border-[#E55C24] font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:bg-orange-50 transition cursor-pointer"
                                             >
                                                 Learn More
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
