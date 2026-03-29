@@ -14,7 +14,7 @@ const PARTNERS = [
   { id: 7, name: "Partner 7" },
   { id: 8, name: "Partner 8" },
   { id: 9, name: "Partner 9" },
-  { id: 10, name: "Partner 10" },
+  
   { id: 11, name: "Partner 11" },
   { id: 12, name: "Partner 12" },
   { id: 13, name: "Partner 13" },
@@ -106,11 +106,12 @@ export default function Contact() {
               className="flex-shrink-0 w-48 h-28 flex items-center justify-center"
             >
               <Image
-                src={`/images/partners/partner-${partner.id}.png`}
+                src={`/images/partners/partner-${partner.id}.png?v=${partner.id}`}
                 alt={partner.name}
                 width={180}
                 height={100}
                 className="object-contain w-44 h-24 opacity-70 hover:opacity-100 transition-opacity duration-300"
+                unoptimized
               />
             </div>
           ))}
