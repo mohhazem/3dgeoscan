@@ -11,7 +11,7 @@ export default function GraphLine() {
     const endX = lastPoint[0];
     const endY = lastPoint[1];
     return (
-        <div className='absolute z-10 h-full' style={{ width: '100%', maxWidth }}>
+        <div className='absolute left-1 z-10 h-full opacity-45' style={{ width: '100%', maxWidth }}>
             <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <style>
@@ -74,13 +74,13 @@ export default function GraphLine() {
                 />
 
                 {/* Dot at the end */}
-                <circle
+                {/* <circle
                     className="end-dot"
                     fill={color}
                     cx={endX}
                     cy={endY}
                     r="0"
-                />
+                /> */}
             </svg>
         </div>
     )

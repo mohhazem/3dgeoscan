@@ -3,9 +3,11 @@
 import { CONTACT_INFO, SOCIALS } from "@/constants/contact";
 import Link from "next/link";
 import { useState } from "react";
+import { sendEmailAction } from "@/app/actions/contact";
 
 export default function ContactSection() {
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     
     const services = [
         "3D Scanning",
@@ -22,6 +24,23 @@ export default function ContactSection() {
                 : [...prev, service]
         );
     };
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus('loading');
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const result = await sendEmailAction(formData);
+
+        if (result?.error) {
+            setStatus('error');
+        } else {
+            setStatus('success');
+            form.reset();
+            setSelectedServices([]);
+        }
+  }
     
     return (
         <section className="flex items-center bg-white py-32">
@@ -142,16 +161,16 @@ export default function ContactSection() {
                     </div>
 
                     <div className="md:w-2/3 p-8 md:p-12">
-                        <form className="space-y-6 text-gray-900">
+                        <form onSubmit={handleSubmit} className="space-y-6 text-gray-900">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                    <input type="text" placeholder="John"
+                                    <input name="firstName" type="text" placeholder="John" required
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                    <input type="text" placeholder="Doe"
+                                    <input name="lastName" type="text" placeholder="Doe"
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                             </div>
@@ -159,12 +178,12 @@ export default function ContactSection() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" placeholder="name@company.com"
+                                    <input name="email" type="email" placeholder="name@company.com" required
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                    <input type="tel" placeholder="+20..."
+                                    <input name="phone" type="tel" placeholder="+20..."
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                             </div>
@@ -192,6 +211,7 @@ export default function ContactSection() {
                                         </button>
                                     ))}
                                 </div>
+                                <input name="serviceInterest" type="hidden" value={selectedServices.join(", ")} />
                             </div>
 
                             {/* <div>
@@ -214,13 +234,23 @@ export default function ContactSection() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Project Details</label>
-                                <textarea rows={4} placeholder="Tell us about the project scale and requirements..."
+                                <textarea name="projectDetails" rows={4} placeholder="Tell us about the project scale and requirements..."
                                     className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400"></textarea>
                             </div>
 
+                            {status === 'error' && (
+                                <p className="text-sm text-red-600">Unable to send your message right now. Please try again.</p>
+                            )}
+
+                            {status === 'success' && (
+                                <p className="text-sm text-green-600">Message sent successfully. We will get back to you soon.</p>
+                            )}
+
                             <button
+                                type="submit"
+                                disabled={status === 'loading'}
                                 className="w-full bg-brand-orange hover:bg-[#c9461d] text-white font-semibold py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200 cursor-pointer">
-                                Send Message
+                                {status === 'loading' ? 'Sending...' : 'Send Message'}
                             </button>
                         </form>
                     </div>

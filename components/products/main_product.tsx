@@ -61,7 +61,7 @@ export default function MainProduct({ product }: MainProductProps) {
                         )}
 
                         {/* Description */}
-                        <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8 line-clamp-3">
+                        <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8">
                             {product.description}
                         </p>
 

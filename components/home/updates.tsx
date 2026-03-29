@@ -9,17 +9,39 @@ type EventItem = (typeof events)[number];
 function NewsCard({ item }: { item: EventItem }) {
     const imageIntervalMs = 4000; // 4 seconds
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        if (item.images.length <= 1) {
+            return;
+        }
+
+        setIsHovered(true);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.images.length);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
 
     useEffect(() => {
+        if (!isHovered || item.images.length <= 1) {
+            return;
+        }
+
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.images.length);
         }, imageIntervalMs); // Change image every 4 seconds
 
         return () => clearInterval(interval);
-    }, [item.images.length]);
+    }, [isHovered, item.images.length]);
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div
+            className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             {/* Image Container */}
             <div
                 className="relative h-40 md:h-64 overflow-hidden"
