@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
+import { generateContactEmailHtml } from '@/components/layout/email-template';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -23,20 +24,21 @@ export async function sendEmailAction(formData: FormData) {
   }
 
   try {
+    const htmlContent = generateContactEmailHtml({
+      firstName,
+      lastName,
+      email,
+      phone,
+      serviceInterest,
+      projectDetails,
+    });
+
     // 3. Send the email using Resend
     const { error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>', // Use this exact address for testing
-      to: 'omara7med2412@gmail.com', // MUST be the email you used to sign up for Resend
+      to: 'moh.hazemhf@gmail.com', // MUST be the email you used to sign up for Resend
       subject: `New 3D Scanning Inquiry from ${firstName} ${lastName}`,
-      html: `
-        <h3>New Project Inquiry</h3>
-        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-        <p><strong>Service Interest:</strong> ${serviceInterest || 'Not specified'}</p>
-        <p><strong>Project Details:</strong></p>
-        <p>${projectDetails || 'No details provided'}</p>
-      `,
+      html: htmlContent,
     });
 
     if (error) {
