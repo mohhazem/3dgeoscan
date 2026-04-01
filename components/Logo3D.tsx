@@ -9,7 +9,7 @@ const CONFIG = {
   maxRotationY: Math.PI / 5,
   maxRotationX: Math.PI / 8,
   lerpSpeed: 0.05,
-  // 👇 Tune these to change which point on the model "chases" the cursor
+  frustumSize: 11, // 👈 Tune this to zoom in/out (smaller = bigger model)
   // x: left(-) / right(+)
   // y: down(-) / up(+)
   // z: back(-) / forward(+)
@@ -48,7 +48,18 @@ export default function Logo3D() {
       isInitializedRef.current = true;
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+
+      // ✅ Orthographic Camera
+      const aspect = width / height;
+      const frustumSize = CONFIG.frustumSize;
+      const camera = new THREE.OrthographicCamera(
+        (frustumSize * aspect) / -2, // left
+        (frustumSize * aspect) /  2, // right
+         frustumSize / 2,            // top
+        -frustumSize / 2,            // bottom
+        0.1,                         // near
+        1000                         // far
+      );
       camera.position.set(8, 8, 8);
       camera.lookAt(0, 0, 0);
 
@@ -82,7 +93,6 @@ export default function Logo3D() {
       scene.add(pivot);
 
       const wrapper = new THREE.Group();
-      // 👇 Shift wrapper to move the rotation center point
       wrapper.position.set(
         -CONFIG.pivotOffset.x,
         -CONFIG.pivotOffset.y,
@@ -190,7 +200,14 @@ export default function Logo3D() {
           const w = containerRef.current.clientWidth;
           const h = containerRef.current.clientHeight;
           if (w === 0 || h === 0) return;
-          camera.aspect = w / h;
+
+          // ✅ Recalculate orthographic bounds on resize
+          const newAspect = w / h;
+          (camera as THREE.OrthographicCamera).left   = (frustumSize * newAspect) / -2;
+          (camera as THREE.OrthographicCamera).right  = (frustumSize * newAspect) /  2;
+          (camera as THREE.OrthographicCamera).top    =  frustumSize / 2;
+          (camera as THREE.OrthographicCamera).bottom = -frustumSize / 2;
+
           camera.updateProjectionMatrix();
           renderer.setSize(w, h);
         }, 100);
