@@ -69,7 +69,7 @@ export default function Service4() {
                             {/* Before Image (Left Side) */}
                             <div className="absolute inset-0">
                                 <img
-                                    src="/images/gps-before.jpg"
+                                    src="/images/geophysic-3.jpg"
                                     alt="Before - Original scan"
                                     className="w-full h-full object-cover"
                                 />
@@ -81,7 +81,7 @@ export default function Service4() {
                                 style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
                             >
                                 <img
-                                    src="/images/gps-after.jpg"
+                                    src="/images/geophysic-2.jpg"
                                     alt="After - 3D model"
                                     className="w-full h-full object-cover"
                                 />
