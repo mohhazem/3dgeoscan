@@ -2,7 +2,7 @@
 
 export default function Solutions() {
     return (
-        <section id="vision" className="h-100 md:min-h-screen md:snap-start flex items-center bg-white pt-0 md:pt-20">
+        <section id="vision" className="md:min-h-screen md:snap-start flex items-center bg-white pt-0 md:pt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
                 <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">Vision</span>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 leading-tight">
@@ -14,7 +14,7 @@ export default function Solutions() {
 
                 <div className="w-full rounded-2xl overflow-hidden">
                     <video
-                        className="w-full h-[250px] md:h-[400px] lg:h-[500px] object-cover"
+                        className="w-full h-[250px] md:h-[400px] lg:h-[400px] object-cover"
                         autoPlay
                         muted
                         loop

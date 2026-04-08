@@ -155,7 +155,7 @@ export default function LatestNews() {
                     <button
                         onClick={handlePrev}
                         aria-label="Previous"
-                        className="absolute left-0 md:-left-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
+                        className="absolute -left-2 md:-left-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -173,7 +173,7 @@ export default function LatestNews() {
                     <button
                         onClick={handleNext}
                         aria-label="Next"
-                        className="absolute right-0 md:-right-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
+                        className="absolute -right-2 md:-right-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
