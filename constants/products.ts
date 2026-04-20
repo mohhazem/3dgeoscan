@@ -10,7 +10,7 @@ export type Product = {
   software: string[];
   sketchfabUrl: string;
   keyFeatures?: string[];
-  brochure?: string; // ✅ added
+  brochure?: string;
 };
 
 export const products: Product[] = [
@@ -36,7 +36,7 @@ export const products: Product[] = [
       "Lightweight and Easy-to-Use",
       "Engineered for the Toughest Environments",
     ],
-    brochure: "/brochures/FARO® Orbis™ Premium Brochure.pdf", // ✅
+    brochure: "/brochures/FARO® Orbis™ Premium Brochure.pdf",
   },
   {
     id: 2,
@@ -60,7 +60,7 @@ export const products: Product[] = [
       "high-speed SSD data storage",
       "Withstand the harshest environments daily",
     ],
-    brochure: "/brochures/Focus premium brochure to print.pdf", // ✅
+    brochure: "/brochures/Focus premium brochure to print.pdf",
   },
   {
     id: 3,
@@ -84,12 +84,12 @@ export const products: Product[] = [
       "Guided Scanning with Real-Time Feedback",
       "Automatic Point Cloud Processing",
     ],
-    brochure: "/brochures/FARO® Blink™ Brochure.pdf", // ✅
+    brochure: "/brochures/FARO® Blink™ Brochure.pdf",
   },
   {
     id: 4,
     slug: "faro-scene",
-    type: "software", // ← software
+    type: "software",
     title: "FARO® SCENE Software",
     logos: ["scene.png"],
     description:
@@ -108,7 +108,8 @@ export const products: Product[] = [
       "Target-less Positioning",
       "Virtual Reality (VR) View",
       "WebShare Cloud Integration"
-    ]
+    ],
+    brochure: "/brochures/TechSheet_SCENE_Software_EN.pdf", // ✅
   },
   {
     id: 5,
@@ -134,7 +135,7 @@ export const products: Product[] = [
       "4D Progress Management (Time Travel)",
       "Integration with Stream Mobile App",
     ],
-    // no brochure for software products (optional)
+    // no brochure available
   },
   {
     id: 6,
@@ -159,6 +160,7 @@ export const products: Product[] = [
       "Efficient Point Cloud Processing",
       "BIM Model Creation & Validation",
     ],
+    brochure: "/brochures/CMO15162_Brochure_AsBuilt_AECO_ENG_LT_Web.pdf", // ✅
   },
   {
     id: 7,
@@ -184,6 +186,7 @@ export const products: Product[] = [
       "Tank Deformation Analysis",
       "Prefabricated Component Inspection",
     ],
+    brochure: "/brochures/TechSheet_BuidIT_Construction_A4_EN.pdf", // ✅
   },
 
 ];
