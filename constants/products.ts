@@ -135,7 +135,7 @@ export const products: Product[] = [
       "4D Progress Management (Time Travel)",
       "Integration with Stream Mobile App",
     ],
-    // no brochure available
+    brochure: "/brochures/Brochure_Sphere_AEC_ENG.pdf", // ✅
   },
   {
     id: 6,
