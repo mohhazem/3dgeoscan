@@ -97,11 +97,12 @@ export default function MainProduct({ product }: MainProductProps) {
 
                         {/* CTA Buttons */}
                         <div className="flex justify-center md:justify-start flex-wrap gap-4">
-                            <button
+                            <a
+                                href="https://3dgeoscan.com/contact"
                                 className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}
                             >
                                 Get a Quote
-                            </button>
+                            </a>
 
                             {/* ✅ Download Brochure Button — only shown if brochure exists */}
                             {product.brochure && (

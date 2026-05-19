@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PARTNERS = [
   { id: 1, name: "Partner 1" },
@@ -14,7 +14,6 @@ const PARTNERS = [
   { id: 7, name: "Partner 7" },
   { id: 8, name: "Partner 8" },
   { id: 9, name: "Partner 9" },
-  
   { id: 11, name: "Partner 11" },
   { id: 12, name: "Partner 12" },
   { id: 13, name: "Partner 13" },
@@ -48,30 +47,75 @@ const PARTNERS = [
 
 export default function Contact() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const positionRef = useRef(0);
+  const isPausedRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartPositionRef = useRef(0);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
     let animationId: number;
-    let position = 0;
     const speed = 2;
 
     const animate = () => {
-      position -= speed;
+      if (!isPausedRef.current && !isDraggingRef.current) {
+        positionRef.current -= speed;
 
-      const halfWidth = track.scrollWidth / 2;
-      if (Math.abs(position) >= halfWidth) {
-        position = 0;
+        const halfWidth = track.scrollWidth / 2;
+        if (Math.abs(positionRef.current) >= halfWidth) {
+          positionRef.current = 0;
+        }
       }
 
-      track.style.transform = `translateX(${position}px)`;
+      track.style.transform = `translateX(${positionRef.current}px)`;
       animationId = requestAnimationFrame(animate);
     };
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
   }, []);
+
+  // ── Hover handlers ──────────────────────────────────────────
+  const handleMouseEnter = () => {
+    isPausedRef.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    isPausedRef.current = false;
+    isDraggingRef.current = false;
+  };
+
+  // ── Drag handlers ───────────────────────────────────────────
+  const handleMouseDown = (e: React.MouseEvent) => {
+    isDraggingRef.current = true;
+    dragStartXRef.current = e.clientX;
+    dragStartPositionRef.current = positionRef.current;
+    e.preventDefault(); // prevent image ghost drag
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return;
+
+    const track = trackRef.current;
+    if (!track) return;
+
+    const delta = e.clientX - dragStartXRef.current;
+    let newPosition = dragStartPositionRef.current + delta;
+
+    // Keep looping within bounds
+    const halfWidth = track.scrollWidth / 2;
+    if (newPosition > 0) newPosition = -halfWidth + newPosition;
+    if (Math.abs(newPosition) >= halfWidth) newPosition = 0;
+
+    positionRef.current = newPosition;
+  };
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false;
+  };
 
   const allPartners = [...PARTNERS, ...PARTNERS];
 
@@ -90,15 +134,19 @@ export default function Contact() {
 
       {/* Carousel */}
       <div
-        className="relative z-10 w-full mb-16 overflow-hidden bg-white"
+        className="relative z-10 w-full mb-16 overflow-hidden bg-white cursor-grab active:cursor-grabbing"
         style={{
           WebkitMaskImage:
             "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
           maskImage:
             "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
         }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
-
         <div ref={trackRef} className="flex items-center gap-10 w-max py-4">
           {allPartners.map((partner, index) => (
             <div
@@ -110,8 +158,9 @@ export default function Contact() {
                 alt={partner.name}
                 width={180}
                 height={100}
-                className="object-contain w-44 h-24 opacity-70 hover:opacity-100 transition-opacity duration-300"
+                className="object-contain w-44 h-24 opacity-70 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 unoptimized
+                draggable={false}
               />
             </div>
           ))}

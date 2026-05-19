@@ -1,6 +1,12 @@
 export default function Polymesh() {
     return (
-        <svg width="859" height="917" viewBox="0 0 859 917" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            className="h-full w-full"
+            viewBox="0 0 859 917"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid slice"
+        >
             <g clipPath="url(#clip0_130_597)">
                 <rect width="860" height="917" transform="translate(-1)" fill="#272727" />
                 <g className="polygons" opacity="0.39">

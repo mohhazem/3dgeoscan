@@ -4,15 +4,10 @@ export default function GraphLine() {
     const color = '#F36F21',
         animationDuration = '2s',
         points = '80,235 200,180 320,110 390,150 620,45',
-        maxWidth = 680,
         showAxes = true
-    const pointsArray = points.trim().split(/\s+/);
-    const lastPoint = pointsArray[pointsArray.length - 1].split(',');
-    const endX = lastPoint[0];
-    const endY = lastPoint[1];
     return (
-        <div className='absolute left-1 z-10 h-full opacity-45' style={{ width: '100%', maxWidth }}>
-            <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+        <div className="pointer-events-none absolute inset-0 z-10 opacity-45">
+            <svg className="h-full w-full" preserveAspectRatio="none" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <style>
                         {`

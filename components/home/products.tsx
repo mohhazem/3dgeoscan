@@ -154,9 +154,12 @@ export default function Products() {
 
                                         {/* CTA Buttons */}
                                         <div className="flex justify-center md:justify-start flex-wrap gap-4">
-                                            <button className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}>
+                                            <a
+                                                href="https://3dgeoscan.com/contact"
+                                                className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}
+                                            >
                                                 Get a Quote
-                                            </button>
+                                            </a>
                                             <Link
                                                 href={`/products?product=${product.slug}`}
                                                 className="bg-white text-[#E55C24] border-2 border-[#E55C24] font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:bg-orange-50 transition cursor-pointer"
