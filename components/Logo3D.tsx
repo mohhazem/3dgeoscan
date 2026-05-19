@@ -3,6 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import type * as THREE from 'three';
 
+// Kick off heavy imports the moment this module is parsed — long before useEffect fires.
+// This means Three.js and the model download in parallel with the rest of the page.
+const _threePromise = import('three');
+const _loaderPromise = import('three/examples/jsm/loaders/GLTFLoader.js');
+
 const CONFIG = {
   initialRotationY: 268,
   maxRotationY: Math.PI / 5,
@@ -72,8 +77,8 @@ export default function Logo3D() {
 
       isInitializedRef.current = true;
 
-      const THREE = await import('three');
-      const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
+      const THREE = await _threePromise;
+      const { GLTFLoader } = await _loaderPromise;
 
       const scene = new THREE.Scene();
 
@@ -90,7 +95,12 @@ export default function Logo3D() {
       camera.position.set(8, 8, 8);
       camera.lookAt(0, 0, 0);
 
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      // Antialiasing is redundant on hi-DPI screens and slows renderer init
+      const renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: window.devicePixelRatio < 2,
+        powerPreference: 'high-performance',
+      });
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setClearColor(0x000000, 0);

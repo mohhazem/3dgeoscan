@@ -36,6 +36,13 @@ export default function RootLayout({
           href="/images/hero.jpg"
           fetchPriority="high"
         />
+        {/* Preload 3D logo model so it downloads alongside Three.js, not after */}
+        <link
+          rel="preload"
+          as="fetch"
+          href="/images/models/logo.glb"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${inter.className} overflow-y-scroll`}>
         <PolymeshCursor />
