@@ -10,7 +10,7 @@ export const projects = [
         deliverables: ["Pointcloud", "As-Built 2D drawings"],
         challange: "Morsi Abl Elabbas mosque domes and walls covered with detailed patterns. Traditional measuring tapes and standard images cannot document them accurately.",
         solution: "we used advanced laser scanners that act like a digital eye, captures millions of points per second, ensuring high quality pointcloud that shows every ornament and pieces that needs to be repaired.",
-        image: "/images/almorssimosque.png",
+        image: "/images/almorssimosque.webp",
         videoUrl: "https://youtu.be/dpJrYpAAY-Y?si=IUulk9zMrP3ayk6f",
     },
     {
@@ -24,7 +24,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "High Detailed 3D Model", "2D AutoCAD Drawings (Site, Plans & Elevations)"],
         challange:"An Old heritage building with delicate structure and hard accessibility, also, filled with carvings and ornaments, required conducting surveying for documention and restoration.",
         solution:"Using different types of laser scanners to map every inch without physically touching a single ancient stone, capturing the ornaments with high density to show cracks and ornaments to deliver a high quality 3D model and 2D drawings.",
-        image: "/images/saudiconsulate.jpg",
+        image: "/images/saudiconsulate.webp",
         videoUrl: "",
     },
     {
@@ -38,7 +38,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "3D Integrated Revit Model (Above & Underground)", "2D AutoCAD Plans for All Infrastructure Systems in Site"],
         challange: "The factory's high-speed conveyor belts and constant vibration from gypsum processing machinery can cause \"noise\" in the point cloud, while airborne gypsum dust particles often reflect the laser, creating distorted data and blurry 3D surfaces.",
         solution: "We utilize Handheld Mobile Scanning with integrated \"Dust-Filtering\" algorithms. By moving strategically around vibrating equipment and using a \"multi-Pass\" walking strategy, we isolate the stable structural geometry from the environmental noise, ensuring a clean 3D model.",
-        image: "/images/knauf.png",
+        image: "/images/knauf.webp",
         videoUrl: "https://youtu.be/vivUsBgLtDE?si=hQ4C7R0Ydw2wnGy-",
     },
     {
@@ -94,7 +94,7 @@ export const projects = [
         deliverables: ["3D Point cloud", "3D Revit model", "2D AutoCAD plans", "FaÃ§ade drawings"],
         challange: "Extremely narrow alleys and high-density surroundings prevent capturing the full facade from street level. These tight \"canyons\" create steep scanning angles and leave the roof and upper architectural details in \"shadow.\"",
         solution: "We utilize Handheld Mobile Scanning for the perimeter alleys, combined with vantage points from surrounding roofs. This dual-elevation approach eliminates \"blind spots\" and ensures a complete, high-resolution 3D model of the building's entire exterior.",
-        image: "/images/alexpost.png",
+        image: "/images/alexpost.webp",
         videoUrl: "https://youtu.be/yAfXBYu1Ovo?si=i4JDxV3zIsvJssr0",
     },
     {
@@ -136,7 +136,7 @@ export const projects = [
         deliverables: ["Pointcloud", "3D Model"],
         challange: "Sporting stadium in Alexandria, A stadium that wasn't just big; it was a complex maze with overlapping multilevels and many stairs, traditional method like measuring tapes or manual scanners were physically impossible to use.",
         solution: "We didn't just capture this complex 3D puzzle but also created a detailed 3D model. Using Mobile SLAM technology to scan through the building, mapping every detail and capturing all the different levels then using the generated pointcloud to create a 3D digital twin that can be navigated throw to understand the shape and form of this building.",
-        image: "/images/sporting.png",
+        image: "/images/sporting.webp",
         videoUrl: "https://youtu.be/Ht45Tpmc8Yg?si=nAQGKL8SWTZqStpm",
     },
     {
@@ -164,7 +164,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "2D As-Built Drawings"],
         challange: "A massive Educational institution with busy sechdule ,and high students traffic, surveying for the entire campus and ,a church with highly detailed ornaments could only be ,conducted in one weekend before the bells rang.",
         solution: "with good planning everything is possible. with our high-speed ,scanning team, our smart strategy and good coordination, we used multiple ,Laser scanners to scan the whole campus in just one day, then delivered the 2D ,drawings in no time.",
-        image: "/images/saintmarc.png" ,
+        image: "/images/saintmarc.webp",
         videoUrl: "https://youtu.be/itjK1ka6jv4?si=vUfNmNV13Sua4vzi",
     },
     {
@@ -178,7 +178,7 @@ export const projects = [
         deliverables: ["3D Point Cloud"],
         challange: "A building from the ancient civilization, with many chambers, dark corners, carvings on walls and complex form. Traditional methods and standard photography will take forever to document this ancient masterpiece.",
         solution: "we conducted the surveying with our high quality laser 3D scanners and SLAM technology to cover every inch and stone with at most speed and delivered a high density colorized pointcloud that enables exploring and documenting history with the easiest digital tools.",
-        image: "/images/abidos.png",
+        image: "/images/abidos.webp",
         videoUrl: "",
     },
     {
@@ -192,7 +192,7 @@ export const projects = [
         deliverables: ["3D Point Cloud"],
         challange: "A monumental architectural building that included thick, irregular stone walls, varying floor levels, arches and complex spaces like a maze that are difficult to align and document using the traditional surveying methods.",
         solution: "We used our scanners that capture the exact shape of the space and created a colorized pointcloud that shows all the details, stone textures and enables us walk through history and measure every inch with no issue.",
-        image: "/images/mohamedalimosque.png",
+        image: "/images/mohamedalimosque.webp",
         videoUrl: "",
     },
     {
@@ -206,7 +206,7 @@ export const projects = [
         deliverables: ["2D CAD drawings"],
         challange: "The immense scale and repetitive, uniform corridors of modern government buildings often cause \"SLAM Drift,\" where the handheld scanner loses its precise orientation, leading to distorted 3D maps and cumulative spatial errors over long distances.",
         solution: "We implement a \"Loop Closure\" Strategy with our handheld scanner. By frequently returning to known starting positions and overlapping our walking paths, the SLAM algorithm automatically corrects and locks the geometry, ensuring a consistent and accurate 3D Pointcloud.",
-        image: "/images/ministryfinance.png",
+        image: "/images/ministryfinance.webp",
         videoUrl: "",
     },
     {
@@ -220,7 +220,7 @@ export const projects = [
         deliverables: ["3D Point cloud"],
         challange: "Educational buildings feature numerous identical and typical offices, long corridors, and multiple stairwells. This \"Geometric Symmetry\" often confuses handheld scanners, causing the SLAM algorithm to \"slip\" or misalign the 3D data between different floor levels.",
         solution: "We utilize Visual and Physical Targets placed at key transition points and stairwells. By scanning in a \"closed-loop\" path from floor to floor, the handheld scanner maintains its orientation, ensuring perfect vertical alignment and spatial accuracy.",
-        image: "/images/sharkeducational.png",
+        image: "/images/sharkeducational.webp",
         videoUrl: "https://youtu.be/NvpFqg1XGj0?si=KfAQm0AKcLdYHIQQ",
     },
     {
@@ -234,7 +234,7 @@ export const projects = [
         deliverables: ["3D Point cloud", "3D model"],
         challange: "The intricate Roman-style decorations, deep reliefs, and high-arched cornices create complex \"geometric shadows,\" where a standard scan from the ground misses the fine details hidden within the deep stone carvings and ornate textures.",
         solution: "We utilize High-Density Terrestrial Scanning at close and far proximity, scanning every pillar and decorative element. This multi-angle Stations ensures the scan algorithm captures every Roman detail, producing a complete, high-definition 3D Pointcloud.",
-        image: "/images/tantauni.png",
+        image: "/images/tantauni.webp",
         videoUrl: "",
     },
     {
@@ -248,7 +248,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "2D AutoCAD Plans", "3D Revit Model"],
         challange: "Massive grinding machinery and dense piping networks create extreme vibrations and \"data shadows,\" hiding critical structural connections and making it impossible to capture clear, stable measurements from a single position.",
         solution: "We deploy High-Resolution Terrestrial Laser Scanning from multiple elevated platforms. By using vibration-filtering settings and overlapping scan stations, we eliminate noise to capture every pipe and bolt for a complete 3D model.",
-        image: "/images/arabiancement.png",
+        image: "/images/arabiancement.webp",
         videoUrl: "https://youtu.be/pnhmCdplAC4?si=uFyEnzRuKHgqdI1F",
     },
     {
@@ -262,7 +262,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "2D AutoCAD Plans", "3D Revit Model"],
         challange: "The massive height and intricate structural density of the preheater tower make it impossible to capture the high-detail connections required for LOD 400 from the ground, as upper-level steelwork and equipment remain hidden in \"data shadows.\"",
         solution: "We execute Multi-Level Terrestrial Scanning, placing the scanner on every structural platform from the base to the summit. This overlapping network captures every bolt, plate, and pipe at millimeter precision, providing the high-fidelity data needed for a detailed LOD 400 model.",
-        image: "/images/lafarge.png",
+        image: "/images/lafarge.webp",
         videoUrl: "",
     },
     {
@@ -276,7 +276,7 @@ export const projects = [
         deliverables: ["3D Point Cloud"],
         challange: "Dense scaffolding and constant worker activity during fabrication create massive \"data noise\" and \"occlusions.\" Static positions are often blocked by temporary poles, while worker movement creates \"ghosting\" effects that can blur critical structural connections.",
         solution: "We utilize Terrestrial Laser Scanning (TLS) as the primary tool for millimeter-accurate, supplemented by Handheld Mobile Scanning to reach \"blind spots\" behind scaffolding. This hybrid approach allows us to filter out site noise and move around obstructions, ensuring a clean, high-precision 3D model of the preheater structure.",
-        image: "/images/mbcc.png",
+        image: "/images/mbcc.webp",
         videoUrl: "",
     },
     {
@@ -290,7 +290,7 @@ export const projects = [
         deliverables: ["3D Point Cloud", "3D Model"],
         challange: "Offshore platforms are high-vibration, High density of piping systems making it difficult to mount terrestrial scanner and high-risk environments where Salt-Spray Corrosion and reflective stainless-steel piping cause \"laser scattering\", leading to misaligned structural data.",
         solution: "We utilize Handheld Mobile Scanning to quickly capture dense piping networks before salt buildup affects the laser. By using a \"Multiple Loop\" walking path and filtering out high-frequency machinery vibrations in post-processing, we ensure a clean, accurate 3D as-built model for offshore maintenance.",
-        image: "/images/medsea.png",
+        image: "/images/medsea.webp",
         videoUrl: "",
     },
     {
@@ -304,7 +304,7 @@ export const projects = [
         deliverables: ["3D Point Cloud"],
         challange: "Offshore platforms feature extreme reflective surfaces (stainless steel and chrome) and constant structural vibration from heavy drilling equipment, which causes \"laser scattering\" and distorted, noisy 3D data.",
         solution: "We utilize High-Resolution Terrestrial Scanning with specialized \"Vibration-Filtering\" and \"Reflective Surface\" settings. By establishing a dense network of stable scan stations, we eliminate data noise to provide a clean, millimeter-accurate 3D Pointcloud.",
-        image: "/images/redsea.png",
+        image: "/images/redsea.webp",
         videoUrl: "",
     },
     {
@@ -332,7 +332,7 @@ export const projects = [
         deliverables: ["3D Point Cloud"],
         challange: "The extreme heat radiation and atmospheric haze around the kiln and cooler create \"mirage effects\" that distort laser beams, while the vertical complexity of the preheater causes massive \"data shadows\" in the structural steel and ducting.",
         solution: "We utilize High-Resolution Terrestrial Scanning with heat-shielded equipment and \"Atmospheric Compensation\" settings. By scanning during scheduled maintenance shutdowns and using multi-level stationing, we capture the exact alignment of the kiln and the full structural density of the preheater.",
-        image: "/images/benisuefvalley.png",
+        image: "/images/benisuefvalley.webp",
         videoUrl: "",
     },
 ];
