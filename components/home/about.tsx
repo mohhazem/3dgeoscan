@@ -112,7 +112,7 @@ export default function About() {
                 </div>
 
                 {/* outer border - top-right */}
-                <div className="absolute top-4 right-14 -translate-y-1/2 translate-x-1/2 bg-white rounded-full p-2 animate-orbit">
+                <div className="absolute top-4 right-14 translate-y-1/8 -translate-x-1/8 bg-white rounded-full p-2 animate-orbit">
                   <Image width={48} height={48} src="/icons/3D%20Mapping.svg" alt="3D Mapping" className="object-contain" />
                 </div>
 
