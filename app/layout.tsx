@@ -29,6 +29,13 @@ export default function RootLayout({
       <head>
         <title>3DGEOSCAN - professional 3d geospatial scanning</title>
         <meta name="description" content="professional 3d geospatial scanning solutions" />
+        {/* Preload hero image as early as possible for fastest LCP */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero.jpg"
+          fetchPriority="high"
+        />
       </head>
       <body className={`${inter.className} overflow-y-scroll`}>
         <PolymeshCursor />

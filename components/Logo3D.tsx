@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type * as THREE from 'three';
 
 const CONFIG = {
@@ -8,14 +8,38 @@ const CONFIG = {
   maxRotationY: Math.PI / 5,
   maxRotationX: Math.PI / 8,
   lerpSpeed: 0.05,
-  frustumSize: 11, // 👈 Tune this to zoom in/out (smaller = bigger model)
-  // x: left(-) / right(+)
-  // y: down(-) / up(+)
-  // z: back(-) / forward(+)
+  frustumSize: 11,
   pivotOffset: { x: 0, y: 0, z: 0 },
 };
 
 const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
+
+function LoadingSpinner() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}
+    >
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          border: '3px solid rgba(241,90,39,0.15)',
+          borderTopColor: '#f15a27',
+          animation: 'logo3d-spin 0.8s linear infinite',
+        }}
+      />
+      <style>{`@keyframes logo3d-spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
 
 export default function Logo3D() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,15 +50,17 @@ export default function Logo3D() {
   const cursorRef = useRef({ x: 0, y: 0 });
   const smoothCursorRef = useRef({ x: 0, y: 0 });
 
+  const [modelReady, setModelReady] = useState(false);
+
   useEffect(() => {
     if (!containerRef.current) return;
-    if (isInitializedRef.current) return;
-
-    const existingCanvas = containerRef.current.querySelector('canvas');
-    if (existingCanvas) containerRef.current.removeChild(existingCanvas);
 
     const initScene = async () => {
       if (!containerRef.current) return;
+      if (isInitializedRef.current) return;
+
+      const existingCanvas = containerRef.current.querySelector('canvas');
+      if (existingCanvas) containerRef.current.removeChild(existingCanvas);
 
       const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
@@ -47,20 +73,19 @@ export default function Logo3D() {
       isInitializedRef.current = true;
 
       const THREE = await import('three');
-      const { FBXLoader } = await import('three/examples/jsm/loaders/FBXLoader.js');
+      const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
 
       const scene = new THREE.Scene();
 
-      // ✅ Orthographic Camera
       const aspect = width / height;
       const frustumSize = CONFIG.frustumSize;
       const camera = new THREE.OrthographicCamera(
-        (frustumSize * aspect) / -2, // left
-        (frustumSize * aspect) /  2, // right
-         frustumSize / 2,            // top
-        -frustumSize / 2,            // bottom
-        0.1,                         // near
-        1000                         // far
+        (frustumSize * aspect) / -2,
+        (frustumSize * aspect) /  2,
+         frustumSize / 2,
+        -frustumSize / 2,
+        0.1,
+        1000
       );
       camera.position.set(8, 8, 8);
       camera.lookAt(0, 0, 0);
@@ -70,6 +95,10 @@ export default function Logo3D() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setClearColor(0x000000, 0);
       rendererRef.current = renderer;
+
+      // Keep canvas hidden until model is ready, so the spinner shows through
+      renderer.domElement.style.opacity = '0';
+      renderer.domElement.style.transition = 'opacity 0.5s ease';
       containerRef.current?.appendChild(renderer.domElement);
 
       scene.add(new THREE.AmbientLight(0xffffff, 1.2));
@@ -122,26 +151,25 @@ export default function Logo3D() {
       window.addEventListener('mouseleave', onMouseLeave);
       window.addEventListener('touchmove', onTouchMove, { passive: true });
 
-      const loader = new FBXLoader();
+      const loader = new GLTFLoader();
       loader.load(
-        '/models/logo.fbx',
-        (fbx) => {
-          console.log('Model loaded!');
+        '/images/models/logo.glb',
+        (gltf) => {
+          const model = gltf.scene;
 
-          const box = new THREE.Box3().setFromObject(fbx);
+          const box = new THREE.Box3().setFromObject(model);
           const size = box.getSize(new THREE.Vector3());
           const maxDim = Math.max(size.x, size.y, size.z);
           const scale = 4 / maxDim;
-          fbx.scale.set(scale, scale, scale);
+          model.scale.set(scale, scale, scale);
 
-          fbx.rotation.x = -Math.PI / 2;
-          fbx.updateMatrixWorld(true);
+          model.updateMatrixWorld(true);
 
-          const rotatedBox = new THREE.Box3().setFromObject(fbx);
-          const center = rotatedBox.getCenter(new THREE.Vector3());
-          fbx.position.set(-center.x, -center.y, -center.z);
+          const scaledBox = new THREE.Box3().setFromObject(model);
+          const center = scaledBox.getCenter(new THREE.Vector3());
+          model.position.set(-center.x, -center.y, -center.z);
 
-          fbx.traverse((child) => {
+          model.traverse((child) => {
             if (child instanceof THREE.Mesh) {
               const name = child.name.toLowerCase();
               if (name.includes('wall') || name.includes('generic')) {
@@ -170,7 +198,13 @@ export default function Logo3D() {
             }
           });
 
-          wrapper.add(fbx);
+          wrapper.add(model);
+
+          // Fade in the canvas and hide the spinner
+          if (rendererRef.current) {
+            rendererRef.current.domElement.style.opacity = '1';
+          }
+          setModelReady(true);
         },
         undefined,
         (error) => console.error('Error loading model:', error)
@@ -203,7 +237,6 @@ export default function Logo3D() {
           const h = containerRef.current.clientHeight;
           if (w === 0 || h === 0) return;
 
-          // ✅ Recalculate orthographic bounds on resize
           const newAspect = w / h;
           (camera as THREE.OrthographicCamera).left   = (frustumSize * newAspect) / -2;
           (camera as THREE.OrthographicCamera).right  = (frustumSize * newAspect) /  2;
@@ -232,6 +265,7 @@ export default function Logo3D() {
       };
     };
 
+    // Start loading immediately on mount so Three.js + FBX are ready as fast as possible.
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
@@ -271,6 +305,8 @@ export default function Logo3D() {
       ref={containerRef}
       className="w-full h-full flex items-center justify-center"
       style={{ minWidth: '100%', minHeight: '100%', position: 'relative' }}
-    />
+    >
+      {!modelReady && <LoadingSpinner />}
+    </div>
   );
 }
