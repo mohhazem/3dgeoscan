@@ -99,7 +99,7 @@ export default function About() {
 
                 {/* inner border - left */}
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full p-2  animate-counter-orbit">
-                  <Image width={48} height={48} src="/icons/left.svg" alt="" />
+                  <Image width={48} height={48} src="/icons/Object%20Scanner.svg" alt="Object Scanner" />
                 </div>
               </div>
 
@@ -108,12 +108,12 @@ export default function About() {
               <div className="absolute -inset-5 border-2 border-dashed border-orange-300 rounded-full animate-counter-orbit">
                 {/* outer border - top-left */}
                 <div className="absolute top-0 left-12 bg-white rounded-full p-2 animate-orbit">
-                  <Image width={48} height={48} src="/icons/tl.svg" alt="" />
+                  <Image width={48} height={48} src="/icons/3D%20Scanning.svg" alt="3D Scanning" />
                 </div>
 
                 {/* outer border - top-right */}
-                <div className="absolute top-0 right-12 bg-white rounded-full p-2 animate-orbit">
-                  <Image width={48} height={48} src="/icons/tr.svg" alt="" />
+                <div className="absolute top-0 right-12 translate-x-1.5 -translate-y-1.5 bg-white rounded-full p-2 animate-orbit">
+                  <Image width={48} height={48} src="/icons/3D%20Mapping.svg" alt="3D Mapping" className="object-contain" />
                 </div>
 
                 {/* outer border - bottom-right */}
@@ -123,7 +123,7 @@ export default function About() {
 
                 {/* outer border - bottom-left */}
                 <div className="absolute bottom-0 left-12 bg-white rounded-full p-2 animate-orbit">
-                  <Image width={48} height={48} src="/icons/bl.svg" alt="" />
+                  <Image width={48} height={48} src="/icons/Geophysical.svg" alt="Geophysical" />
                 </div>
               </div>
             </div>
