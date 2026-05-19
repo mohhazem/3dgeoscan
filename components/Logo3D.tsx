@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+import type * as THREE from 'three';
 
 const CONFIG = {
   initialRotationY: 268,
@@ -34,18 +33,21 @@ export default function Logo3D() {
     const existingCanvas = containerRef.current.querySelector('canvas');
     if (existingCanvas) containerRef.current.removeChild(existingCanvas);
 
-    const initScene = () => {
+    const initScene = async () => {
       if (!containerRef.current) return;
 
       const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
 
       if (width === 0 || height === 0) {
-        requestAnimationFrame(initScene);
+        requestAnimationFrame(() => initScene());
         return;
       }
 
       isInitializedRef.current = true;
+
+      const THREE = await import('three');
+      const { FBXLoader } = await import('three/examples/jsm/loaders/FBXLoader.js');
 
       const scene = new THREE.Scene();
 
@@ -192,7 +194,7 @@ export default function Logo3D() {
 
       animate();
 
-      let resizeTimeout: NodeJS.Timeout;
+      let resizeTimeout: ReturnType<typeof setTimeout>;
       const handleResize = () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
@@ -215,7 +217,7 @@ export default function Logo3D() {
 
       window.addEventListener('resize', handleResize);
 
-      (containerRef.current as any).__cleanup = () => {
+      (containerRef.current as HTMLDivElement & { __cleanup?: () => void }).__cleanup = () => {
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('mouseleave', onMouseLeave);
@@ -251,7 +253,7 @@ export default function Logo3D() {
       }
 
       if (containerRef.current) {
-        const cleanup = (containerRef.current as any).__cleanup;
+        const cleanup = (containerRef.current as HTMLDivElement & { __cleanup?: () => void }).__cleanup;
         if (cleanup) cleanup();
         const canvas = containerRef.current.querySelector('canvas');
         if (canvas) containerRef.current.removeChild(canvas);
