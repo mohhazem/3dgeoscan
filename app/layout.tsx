@@ -8,6 +8,7 @@ import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import ScrollIndicator from "@/components/layout/scroll-indicator";
 import PolymeshCursor from "@/components/layout/polymesh-cursor";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,6 +51,7 @@ export default function RootLayout({
         <ScrollIndicator />
         <main className=" w-full">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
