@@ -5,20 +5,15 @@ import { productContactLabels } from "@/constants/products";
 import Link from "next/link";
 import { useState } from "react";
 import { sendEmailAction } from "@/app/actions/contact";
-
-const SERVICES = [
-    "3D Scanning",
-    "Underground Utilities",
-    "Digital Twin",
-    "Geophysical Studies",
-    "Other",
-] as const;
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 function toggleSelection(list: string[], item: string) {
     return list.includes(item) ? list.filter((s) => s !== item) : [...list, item];
 }
 
 export default function ContactSection() {
+    const { t } = useLanguage();
+    const SERVICES = t.contact.services;
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -45,11 +40,10 @@ export default function ContactSection() {
         <section className="flex items-center bg-white py-32">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-12">
-                    <h4 className="text-brand-orange font-semibold tracking-wide uppercase text-sm mb-2">Contact Us</h4>
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get in touch with us</h1>
+                    <h4 className="text-brand-orange font-semibold tracking-wide uppercase text-sm mb-2">{t.contact.label}</h4>
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t.contact.heading}</h1>
                     <p className="text-gray-500 max-w-2xl mx-auto">
-                        Got a question, an idea, or a problem that refuses to behave?
-                        We deliver unmatched precision with the largest fleet of laser scanning equipment.
+                        {t.contact.description}
                     </p>
                 </div>
                 <div
@@ -63,12 +57,9 @@ export default function ContactSection() {
                         </div>
 
                         <div className="relative z-20">
-                            <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
+                            <h3 className="text-2xl font-bold mb-4">{t.contact.infoHeading}</h3>
                             <p className="text-gray-400 mb-6 leading-relaxed">
-                                We're here to assist you with your 3D scanning needs. Reach out for inquiries, partnerships, or
-                                technical support.
-
-
+                                {t.contact.infoDescription}
                             </p>
 
                             {/* <!-- Contact Details --> */}
@@ -99,8 +90,8 @@ export default function ContactSection() {
                                             )}
                                         </div>
                                         <div>
-                                            <p className="text-gray-400 text-sm">{contact.label}</p>
-                                            <p className="font-medium">{contact.text}</p>
+                                            <p className="text-gray-400 text-sm">{t.contactInfoLabels[contact.label as keyof typeof t.contactInfoLabels] ?? contact.label}</p>
+                                            <p className="font-medium" dir="ltr">{contact.text}</p>
                                         </div>
                                     </Link>
                                 ))}
@@ -108,7 +99,7 @@ export default function ContactSection() {
 
                             {/* <!-- Social Links --> */}
                             <div>
-                                <p className="text-gray-400 text-sm mb-4">Follow us on</p>
+                                <p className="text-gray-400 text-sm mb-4">{t.contact.followUsOn}</p>
                                 <div className="flex gap-3">
                                     {SOCIALS.map((social, index) => (
                                         <Link
@@ -163,12 +154,12 @@ export default function ContactSection() {
                         <form onSubmit={handleSubmit} className="space-y-6 text-gray-900">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.firstName}</label>
                                     <input name="firstName" type="text" placeholder="John" required
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.lastName}</label>
                                     <input name="lastName" type="text" placeholder="Doe"
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
@@ -176,12 +167,12 @@ export default function ContactSection() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.emailAddress}</label>
                                     <input name="email" type="email" placeholder="name@company.com" required
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.phoneNumber}</label>
                                     <input name="phone" type="tel" placeholder="+20..."
                                         className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400" />
                                 </div>
@@ -189,9 +180,9 @@ export default function ContactSection() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Service Interest 
+                                    {t.contact.serviceInterest}
                                     {selectedServices.length > 0 && (
-                                        <span className="text-brand-orange ml-2">({selectedServices.length} selected)</span>
+                                        <span className="text-brand-orange ms-2">({selectedServices.length} {t.contact.selected})</span>
                                     )}
                                 </label>
                                 <div className="flex flex-wrap gap-3">
@@ -215,9 +206,9 @@ export default function ContactSection() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Product Interest
+                                    {t.contact.productInterest}
                                     {selectedProducts.length > 0 && (
-                                        <span className="text-brand-orange ml-2">({selectedProducts.length} selected)</span>
+                                        <span className="text-brand-orange ms-2">({selectedProducts.length} {t.contact.selected})</span>
                                     )}
                                 </label>
                                 <div className="flex flex-wrap gap-3">
@@ -258,24 +249,24 @@ export default function ContactSection() {
                             </div> */}
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Project Details</label>
-                                <textarea name="projectDetails" rows={4} placeholder="Tell us about the project scale and requirements..."
+                                <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.projectDetails}</label>
+                                <textarea name="projectDetails" rows={4} placeholder={t.contact.projectDetailsPlaceholder}
                                     className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20 outline-none transition duration-200 placeholder:text-gray-400"></textarea>
                             </div>
 
                             {status === 'error' && (
-                                <p className="text-sm text-red-600">Unable to send your message right now. Please try again.</p>
+                                <p className="text-sm text-red-600">{t.contact.errorMessage}</p>
                             )}
 
                             {status === 'success' && (
-                                <p className="text-sm text-green-600">Message sent successfully. We will get back to you soon.</p>
+                                <p className="text-sm text-green-600">{t.contact.successMessage}</p>
                             )}
 
                             <button
                                 type="submit"
                                 disabled={status === 'loading'}
                                 className="w-full bg-brand-orange hover:bg-[#c9461d] text-white font-semibold py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200 cursor-pointer">
-                                {status === 'loading' ? 'Sending...' : 'Send Message'}
+                                {status === 'loading' ? t.contact.sending : t.contact.sendMessage}
                             </button>
                         </form>
                     </div>

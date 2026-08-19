@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 type TrackedSection = {
     id: string;
@@ -9,17 +10,17 @@ type TrackedSection = {
     element: HTMLElement;
 };
 
-const PROJECT_PAGE_SECTIONS: Array<{ id: string; label: string }> = [
-    { id: 'projects-architecture', label: 'Architecture' },
-    { id: 'projects-heritage', label: 'Heritage' },
-    { id: 'projects-industrial', label: 'Industrial' },
-];
-
 function formatSectionLabel(id: string) {
     return id.replace(/^projects-/, '').replace(/-/g, ' ');
 }
 
 export default function ScrollIndicator() {
+    const { t } = useLanguage();
+    const PROJECT_PAGE_SECTIONS: Array<{ id: string; label: string }> = [
+        { id: 'projects-architecture', label: t.projectsPage.categories.Architecture },
+        { id: 'projects-heritage', label: t.projectsPage.categories.Heritage },
+        { id: 'projects-industrial', label: t.projectsPage.categories.Industrial },
+    ];
     const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
     const [sections, setSections] = useState<TrackedSection[]>([]);
     const [isVisible, setIsVisible] = useState(false);
@@ -115,7 +116,7 @@ export default function ScrollIndicator() {
             observer.disconnect();
             heroObserver?.disconnect();
         };
-    }, [isHomePage, isProjectsPage]);
+    }, [isHomePage, isProjectsPage, t]);
 
     const scrollToSection = (index: number) => {
         if (sections[index]) {
@@ -126,7 +127,7 @@ export default function ScrollIndicator() {
     if ((!isHomePage && !isProjectsPage) || sections.length === 0 || !isVisible) return null;
 
     return (
-        <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4">
+        <div className="fixed right-8 rtl:right-auto rtl:left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4">
             <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5" />
 
             {sections.map((section, index) => (
@@ -134,7 +135,7 @@ export default function ScrollIndicator() {
                     key={section.id}
                     onClick={() => scrollToSection(index)}
                     className="relative group cursor-pointer"
-                    aria-label={`Go to ${section.label}`}
+                    aria-label={`${t.scrollIndicator.goTo} ${section.label}`}
                 >
                     <div
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${
@@ -144,7 +145,7 @@ export default function ScrollIndicator() {
                         }`}
                     />
 
-                    <span className="absolute right-6 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none capitalize">
+                    <span className="absolute right-6 rtl:right-auto rtl:left-6 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none capitalize">
                         {section.label}
                     </span>
                 </button>

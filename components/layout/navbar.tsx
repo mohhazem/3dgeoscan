@@ -4,14 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
-
-const NAV_LINKS = [
-  { label: "Products", href: "/products" },
-  { label: "Projects", href: "/projects" },
-  { label: "Services", href: "/services" },
-];
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import LanguageSwitcher from "./language-switcher";
 
 export default function Navbar() {
+  const { t } = useLanguage();
+  const NAV_LINKS = [
+    { label: t.nav.products, href: "/products" },
+    { label: t.nav.projects, href: "/projects" },
+    { label: t.nav.services, href: "/services" },
+  ];
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeStyle, setActiveStyle] = useState({ left: 0, width: 0 });
@@ -47,7 +49,7 @@ export default function Navbar() {
     } else {
       setIndicatorReady(false);
     }
-  }, [pathname]);
+  }, [pathname, t]);
 
   // The indicator follows hover when hovering, otherwise snaps to active
   const indicatorStyle = isHovering ? hoverStyle : activeStyle;
@@ -130,13 +132,14 @@ export default function Navbar() {
             />
           </div>
 
-          {/* contact button */}
-          <div className="hidden md:block">
+          {/* contact button + language switcher */}
+          <div className="hidden md:flex items-center gap-4">
+            <LanguageSwitcher isSolid={isSolid} />
             <Link
               href="/contact"
               className="bg-[#E55C24] text-white px-8 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
             >
-              Contact us
+              {t.nav.contact}
             </Link>
           </div>
 
@@ -174,12 +177,15 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <div className="flex justify-center mt-4">
+              <LanguageSwitcher isSolid={false} />
+            </div>
             <Link
               href="/contact"
               className="block mt-4 bg-orange-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors text-center"
               onClick={() => setIsOpen(false)}
             >
-              Contact us
+              {t.nav.contact}
             </Link>
           </div>
         )}

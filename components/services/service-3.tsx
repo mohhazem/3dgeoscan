@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Service3() {
+    const { t } = useLanguage();
     const [sliderPosition, setSliderPosition] = useState(50);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
@@ -33,20 +35,19 @@ export default function Service3() {
     };
 
     // Key Features Data
-    const features = [
-        "High-Fidelity Virtualization (mm accuracy)",
-        "BIM-Ready intelligence",
-        "Global remote access (visit your site virtually at anytime)",
-        "Decision making and asset management",
-    ];
+    const features = t.servicesPage.service3.features;
 
     // Application Industries Data
-    const applications = [
-        { icon: "png", src: "/Service_icons/AEC.png", name: "Architecture Engineering and Construction (AEC)" },
-        { icon: "png", src: "/Service_icons/Heritage.png", name: "Heritage" },
-        { icon: "png", src: "/Service_icons/Industry.png", name: "Industrial and Manufacturing" },
-        { icon: "building", src: "", name: "Infrastructure and urban assets" },
+    const applicationIcons = [
+        { icon: "png", src: "/Service_icons/AEC.png" },
+        { icon: "png", src: "/Service_icons/Heritage.png" },
+        { icon: "png", src: "/Service_icons/Industry.png" },
+        { icon: "building", src: "" },
     ];
+    const applications = t.servicesPage.service3.applications.map((name, idx) => ({
+        ...applicationIcons[idx],
+        name,
+    }));
 
     return (
         <section id="digital-twin" className="min-h-screen md:h-screen bg-white py-20 flex items-center">
@@ -57,23 +58,22 @@ export default function Service3() {
                     <div className="order-2 lg:order-1">
                         {/* Main Title */}
                         <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                            Digital Twin
+                            {t.servicesPage.service3.title}
                         </h2>
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            Exact digital version of every industry
+                            {t.servicesPage.service3.subtitle}
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            We create highly accurate 1:1 digital twins, a powerful tool for monitoring, simulating and
-                            managing your project by combining 3D scanning with real-time data.
+                            {t.servicesPage.service3.description}
                         </p>
 
                         {/* Key Features */}
                         <div className="mb-8">
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Key Features</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.keyFeatures}</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {features.map((feature, index) => (
                                     <div key={index} className="flex items-center gap-3">
@@ -90,7 +90,7 @@ export default function Service3() {
 
                         {/* Application */}
                         <div>
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.application}</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
                                     <div

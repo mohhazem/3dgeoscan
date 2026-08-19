@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Service2() {
+    const { t } = useLanguage();
     const [sliderPosition, setSliderPosition] = useState(50);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
@@ -33,19 +35,18 @@ export default function Service2() {
     };
 
     // Key Features Data
-    const features = [
-        "Non-Destructive detection without digging .",
-        "Clear utility maps and full site transparency.",
-        "3D BIM integration.",
-        "Full data for reducing risk and enhancing safety",
-    ];
+    const features = t.servicesPage.service2.features;
 
     // Application Industries Data
-    const applications = [
-        { icon: "png", src: "/Service_icons/Oil%20and%20Gas.png", name: "Oil and gas (pipeline mapping)" },
-        { icon: "png", src: "/Service_icons/Industry.png", name: "Industrial and manufacturing (factory expansions)" },
-        { icon: "building", src: "", name: "Construction and infrastructure (Site preparation and urban redevelopment)" },
+    const applicationIcons = [
+        { icon: "png", src: "/Service_icons/Oil%20and%20Gas.png" },
+        { icon: "png", src: "/Service_icons/Industry.png" },
+        { icon: "building", src: "" },
     ];
+    const applications = t.servicesPage.service2.applications.map((name, idx) => ({
+        ...applicationIcons[idx],
+        name,
+    }));
 
     return (
         <section id="underground-utilities" className="min-h-screen md:h-screen bg-gray-50 py-20 flex items-center">
@@ -107,25 +108,22 @@ export default function Service2() {
                     <div className="order-2">
                         {/* Main Title */}
                         <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                            Underground Utilities
+                            {t.servicesPage.service2.title}
                         </h2>
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            A clear view of everything above
-                            and below the ground in one place
+                            {t.servicesPage.service2.subtitle}
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            We provide comprehensive subsurface utility detection services. We
-                            map the invisible infrastructure beneath your site to prevent costly
-                            utility strikes and project delays
+                            {t.servicesPage.service2.description}
                         </p>
 
                         {/* Key Features */}
                         <div className="mb-8">
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Key Features</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.keyFeatures}</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {features.map((feature, index) => (
                                     <div key={index} className="flex items-center gap-3">
@@ -142,7 +140,7 @@ export default function Service2() {
 
                         {/* Application */}
                         <div>
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.application}</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
                                     <div

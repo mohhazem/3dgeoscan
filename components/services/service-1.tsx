@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Service1() {
+    const { t } = useLanguage();
     const [sliderPosition, setSliderPosition] = useState(50);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
@@ -33,22 +35,20 @@ export default function Service1() {
     };
 
     // Key Features Data
-    const features = [
-        "Rapid Mobile Data Capture.",
-        "Exceptional precision",
-        "True-Color RGB Colorization",
-        "Georeferenced Spatial Accuracy",
-    ];
+    const features = t.servicesPage.service1.features;
 
     // Application Industries Data with PNG icons
-    const applications = [
-        { icon: "/Service_icons/Industry.png", name: "Industry" },
-        { icon: "/Service_icons/AEC.png", name: "AEC" },
-        { icon: "/Service_icons/Oil%20and%20Gas.png", name: "Oil and Gas" },
-        { icon: "/Service_icons/Heritage.png", name: "Heritage" },
-        { icon: "/Service_icons/Archeology.png", name: "Archeology" },
-        
+    const applicationIcons = [
+        "/Service_icons/Industry.png",
+        "/Service_icons/AEC.png",
+        "/Service_icons/Oil%20and%20Gas.png",
+        "/Service_icons/Heritage.png",
+        "/Service_icons/Archeology.png",
     ];
+    const applications = t.servicesPage.service1.applications.map((name, idx) => ({
+        icon: applicationIcons[idx],
+        name,
+    }));
 
     return (
         <section id="3d-scanning" className="min-h-screen md:h-screen bg-white py-20 flex items-center">
@@ -59,23 +59,22 @@ export default function Service1() {
                     <div className="order-2 lg:order-1">
                         {/* Main Title */}
                         <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                            3D Laser Scanning
+                            {t.servicesPage.service1.title}
                         </h2>
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            Precision Reality Capture for Complex Environments
+                            {t.servicesPage.service1.subtitle}
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            Our advanced LiDAR technology captures millions of precise data points
-                            to generate a point cloud that perfectly matches the physical environment.
+                            {t.servicesPage.service1.description}
                         </p>
 
                         {/* Key Features */}
                         <div className="mb-8">
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Key Features</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.keyFeatures}</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {features.map((feature, index) => (
                                     <div key={index} className="flex items-center gap-3">
@@ -92,7 +91,7 @@ export default function Service1() {
 
                         {/* Application */}
                         <div>
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.application}</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
                                     <div

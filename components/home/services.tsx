@@ -1,13 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Services() {
+    const { t } = useLanguage();
     const services = [
         {
-            title: "3D Scanning",
-            description:
-                "High-precision laser scanning technology to capture detailed spatial data of structures, terrain, and infrastructure. Create accurate 3D models for documentation, analysis, and planning.",
             dark: false,
             image: "/images/3dscan-2.jpg",
             link: "/services#3d-scanning",
@@ -30,9 +29,6 @@ export default function Services() {
             ),
         },
         {
-            title: "Underground Utilities Mapping",
-            description:
-                "Advanced detection and mapping of underground utilities including pipes, cables, and infrastructure. Prevent costly damages and ensure safe excavation with precise subsurface mapping.",
             dark: false,
             image: "/images/undergroundutil-2.jpg",
             link: "/services#underground-utilities",
@@ -102,9 +98,6 @@ export default function Services() {
             ),
         },
         {
-            title: "Digital Twin & Facility Management",
-            description:
-                "Create dynamic virtual replicas of physical assets and environments. Enable real-time monitoring, simulation, and predictive maintenance for enhanced decision-making and asset management.",
             dark: false,
             image: "/images/digitwin-2.jpg",
             link: "/services#digital-twin",
@@ -120,9 +113,6 @@ export default function Services() {
             ),
         },
         {
-            title: "Geophysical Studies",
-            description:
-                "Comprehensive subsurface investigation using advanced geophysical methods. Analyze soil conditions, identify geological features, and assess site characteristics for construction and environmental projects.",
             image: "/images/geophysic-2.jpg",
             link: "/services#geophysical-studies",
             icon: (
@@ -162,8 +152,8 @@ export default function Services() {
     return (
         <section id="services" className="min-h-screen md:h-screen md:snap-start flex items-center bg-white py-10 md:pt-20 md:pb-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">Services</span>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">Comprehensive 3D Geospatial Solutions</h2>
+                <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">{t.servicesHome.label}</span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">{t.servicesHome.heading}</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {services.map((service, idx) => (
@@ -178,23 +168,14 @@ export default function Services() {
                                     className="h-full w-full object-cover" alt="Background" />
                                 <div className="absolute inset-0 bg-black/50"></div>
                             </div>
-                            {/* <svg className="absolute top-0 right-8 opacity-0 -translate-y-10 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-30" width="127" height="129" viewBox="0 0 127 129" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M63.5 -42.5L127 -5.8606V91.8606L63.5 128.5L0 91.8606V67.3543L63.1157 103.85L105.844 79.6475V55.2212L42.328 18.5657L63.5 6.35256L105.844 30.7789V6.35256L63.5 -18.0736L21.172 6.35256V30.7789L84.8002 67.3543L63.5 79.6475L0 43.008V-5.8606L63.5 -42.5Z" fill="#cacacaff" />
-                            </svg> */}
                             <div className="relative z-10">
-                                {/* Icon commented out */}
-                                {/* {service.icon && (
-                                    <div className={`w-12 h-12 rounded-full bg-[#2C2C31] flex items-center justify-center mb-4 transition-all duration-500 opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100`}>
-                                        {service.icon}
-                                    </div>
-                                )} */}
                                 {service.icon && (
-                                    <div className={`w-12 h-12 rounded-full bg-[#2C2C31] flex items-center justify-center absolute -top-3 right-3 opacity-0 -translate-y-10 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100`}>
+                                    <div className={`w-12 h-12 rounded-full bg-[#2C2C31] flex items-center justify-center absolute -top-3 right-3 rtl:right-auto rtl:left-3 opacity-0 -translate-y-10 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100`}>
                                         {service.icon}
                                     </div>
                                 )}
-                                <h3 className="text-white text-xl md:text-2xl font-bold mb-3 translate-y-28 md:translate-y-20 transition-all duration-500 group-hover:translate-y-0 group-hover:text-black">{service.title}</h3>
-                                <p className="text-sm md:text-base text-white/90 transition-all duration-500 opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 group-hover:text-gray-600">{service.description}</p>
+                                <h3 className="text-white text-xl md:text-2xl font-bold mb-3 translate-y-28 md:translate-y-20 transition-all duration-500 group-hover:translate-y-0 group-hover:text-black">{t.servicesHome.items[idx].title}</h3>
+                                <p className="text-sm md:text-base text-white/90 transition-all duration-500 opacity-0 translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 group-hover:text-gray-600">{t.servicesHome.items[idx].description}</p>
                             </div>
                         </Link>
                     ))}

@@ -2,16 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CONTACT_INFO, SOCIALS } from "@/constants/contact";
-
-const NAV_LINKS = [
-  // { label: "About Us", href: "/#about" },
-  { label: "Products", href: "/products" },
-  { label: "Projects", href: "/projects" },
-  { label: "Services", href: "/services" },
-  // { label: "Contact", href: "/contact" },
-];
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Footer() {
+  const { t, locale } = useLanguage();
+  const NAV_LINKS = [
+    { label: t.nav.products, href: "/products" },
+    { label: t.nav.projects, href: "/projects" },
+    { label: t.nav.services, href: "/services" },
+  ];
+
   return (
     <footer className="bg-[#2C2C31] text-white md:snap-end">
 
@@ -34,13 +34,13 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-white/60 text-sm">
-              Bridging history & innovation with precision scanning technology.
+              {t.footer.tagline}
             </p>
           </div>
 
           {/* navigation links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Company</h3>
+            <h3 className="text-lg font-bold mb-4">{t.footer.company}</h3>
             <ul className="space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
@@ -57,7 +57,7 @@ export default function Footer() {
 
           {/* contact */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Contact</h3>
+            <h3 className="text-lg font-bold mb-4">{t.footer.contact}</h3>
             <ul className="space-y-3">
               {CONTACT_INFO.map((item, index) => (
                 <li key={index}>
@@ -71,7 +71,7 @@ export default function Footer() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     )}
-                    <span>{item.text}</span>
+                    <span dir="ltr">{item.text}</span>
                   </Link>
                 </li>
               ))}
@@ -80,7 +80,7 @@ export default function Footer() {
 
           {/* follow us */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Follow Us</h3>
+            <h3 className="text-lg font-bold mb-4">{t.footer.followUs}</h3>
             <div className="flex gap-4">
               {SOCIALS.map((social, index) => (
                 <Link 
@@ -135,16 +135,16 @@ export default function Footer() {
 
             {/* copyright */}
             <p className="text-white/60 text-sm">
-              © 2026 3D Geoscan. All rights reserved.
+              {t.footer.rights}
             </p>
 
-            {/* language selector */}
+            {/* language indicator */}
             <div className="flex items-center gap-2 text-white/80">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" strokeWidth="2" />
                 <path strokeWidth="2" d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
               </svg>
-              <span>English</span>
+              <span>{t.language[locale]}</span>
             </div>
 
           </div>

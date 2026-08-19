@@ -3,13 +3,15 @@
 import { useParams } from 'next/navigation';
 import { products } from '@/constants/products';
 import { useState } from 'react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function ProductPage() {
   const { slug } = useParams();
   const product = products.find((p) => p.slug === slug);
   const [show3D, setShow3D] = useState(false);
+  const { t, pick } = useLanguage();
 
-  if (!product) return <p className="p-10">Product not found</p>;
+  if (!product) return <p className="p-10">{t.productsPage.productNotFound}</p>;
 
   return (
     <section className="min-h-screen pt-28 bg-white">
@@ -27,7 +29,7 @@ export default function ProductPage() {
             className="w-full h-auto object-contain"
           />
           <p className="text-center text-sm text-gray-500 mt-3">
-            Click to view 3D model
+            {t.productsPage.clickFor3D}
           </p>
         </div>
 
@@ -35,17 +37,17 @@ export default function ProductPage() {
         <div>
           <h1 className="text-4xl text-gray-900 font-bold mb-4">{product.title}</h1>
 
-          <p className="text-gray-600 mb-6">{product.description}</p>
+          <p className="text-gray-600 mb-6">{pick(product.description, product.descriptionAr)}</p>
 
-          <h3 className="text-gray-900 font-semibold mb-2">Package Includes</h3>
+          <h3 className="text-gray-900 font-semibold mb-2">{t.productsPage.packageIncludes}</h3>
           <ul className="list-disc list-inside text-gray-600 mb-6 marker:text-[#E55C24]">
-            {product.packageIncludes.map((item, i) => (
+            {pick(product.packageIncludes, product.packageIncludesAr).map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
 
-          <h3 className="text-gray-900 font-semibold mb-2">Software</h3>
-          <p className="text-gray-600">{product.software}</p>
+          <h3 className="text-gray-900 font-semibold mb-2">{t.productsPage.software}</h3>
+          <p className="text-gray-600">{product.software.join(', ')}</p>
         </div>
       </div>
       </div>
@@ -56,9 +58,9 @@ export default function ProductPage() {
           <div className="relative w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden">
             <button
               onClick={() => setShow3D(false)}
-              className="absolute top-3 right-3 z-10 bg-white rounded-full px-3 py-1 text-sm font-semibold"
+              className="absolute top-3 right-3 rtl:right-auto rtl:left-3 z-10 bg-white rounded-full px-3 py-1 text-sm font-semibold"
             >
-              ✕ Close
+              ✕ {t.productsPage.close}
             </button>
 
             <iframe

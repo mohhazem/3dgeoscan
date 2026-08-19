@@ -1,28 +1,30 @@
 // components/services/our-services.tsx
 
-import React from 'react';
+'use client';
+
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 const OurServices = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="min-h-screen bg-white py-20 flex items-center">
       <div className="max-w-4xl mx-auto text-center">
         {/* Label */}
         <span className="text-[#E85A2C] font-medium text-md tracking-wide">
-          Our Services
+          {t.servicesPage.label}
         </span>
 
         {/* Main Heading */}
         <h2 className="text-4xl md:text-5xl font-bold text-black mt-4 mb-6">
-          Reality, Digitized. From the{' '}
+          {t.servicesPage.headingPrefix}{' '}
           <br />
-          <span className="text-[#E85A2C]"> Surface to the Subsurface.</span>
+          <span className="text-[#E85A2C]"> {t.servicesPage.headingHighlight}</span>
         </h2>
 
         {/* Description */}
         <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          We eliminate the guesswork for you. 3D Geoscan combines advanced 3D laser scanning with subsurface detection.
-          We provide the reliable data foundation required for smart design, clash-free execution, and asset management
-          in all sectors.
+          {t.servicesPage.description}
         </p>
       </div>
     </section>

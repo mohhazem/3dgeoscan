@@ -1,12 +1,14 @@
 'use client';
 
 import { Product } from '@/constants/products';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface MainProductProps {
     product: Product;
 }
 
 export default function MainProduct({ product }: MainProductProps) {
+    const { t, pick } = useLanguage();
     const brandColorClass = 'text-orange-600';
     const brandBgClass = 'bg-[#E55C24]';
 
@@ -56,13 +58,13 @@ export default function MainProduct({ product }: MainProductProps) {
                         {/* Software Badge */}
                         {product.type === 'software' && (
                             <span className="inline-block text-sm font-semibold text-[#E55C24] uppercase tracking-widest mb-3">
-                                Software
+                                {t.productsPage.softwareBadge}
                             </span>
                         )}
 
                         {/* Description */}
                         <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8">
-                            {product.description}
+                            {pick(product.description, product.descriptionAr)}
                         </p>
 
                         {/* Two-Column List Section */}
@@ -70,11 +72,11 @@ export default function MainProduct({ product }: MainProductProps) {
 
                             {/* Package Includes */}
                             <div>
-                                <h4 className="font-bold text-gray-900 mb-3">Package Includes</h4>
+                                <h4 className="font-bold text-gray-900 mb-3">{t.productsPage.packageIncludes}</h4>
                                 <ul className="space-y-2">
-                                    {product.packageIncludes.map((item, idx) => (
+                                    {pick(product.packageIncludes, product.packageIncludesAr).map((item, idx) => (
                                         <li key={idx} className="flex items-start text-sm text-gray-600">
-                                            <span className={`${brandColorClass} mr-2`}>•</span>
+                                            <span className={`${brandColorClass} me-2`}>•</span>
                                             {item}
                                         </li>
                                     ))}
@@ -84,7 +86,7 @@ export default function MainProduct({ product }: MainProductProps) {
                             {/* Logos — hardware only */}
                             {product.type === 'hardware' && (
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-3">Applicable Software</h4>
+                                    <h4 className="font-bold text-gray-900 mb-3">{t.productsPage.applicableSoftware}</h4>
                                     <div className="flex flex-wrap items-center gap-3">
                                         {product.logos.map((logo, i) => (
                                             <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
@@ -101,7 +103,7 @@ export default function MainProduct({ product }: MainProductProps) {
                                 href="https://3dgeoscan.com/contact"
                                 className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}
                             >
-                                Get a Quote
+                                {t.productsPage.getQuote}
                             </a>
 
                             {/* ✅ Download Brochure Button — only shown if brochure exists */}
@@ -121,7 +123,7 @@ export default function MainProduct({ product }: MainProductProps) {
                                     >
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
                                     </svg>
-                                    Download Brochure
+                                    {t.productsPage.downloadBrochure}
                                 </button>
                             )}
                         </div>

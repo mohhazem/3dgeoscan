@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import { events } from "@/constants/events";
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 type EventItem = (typeof events)[number];
 
 // News Card Component
 function NewsCard({ item }: { item: EventItem }) {
+    const { pick } = useLanguage();
     const imageIntervalMs = 4000; // 4 seconds
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
@@ -63,17 +65,17 @@ function NewsCard({ item }: { item: EventItem }) {
             <div className="p-6">
                 {/* Date */}
                 <p className="text-sm text-orange-500 font-semibold mb-3">
-                    {item.date}
+                    {pick(item.date, item.dateAr)}
                 </p>
 
                 {/* Title */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {item.title}
+                    {pick(item.title, item.titleAr)}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-4" title={item.description}>
-                    {item.description}
+                <p className="text-gray-600 text-sm leading-relaxed line-clamp-4" title={pick(item.description, item.descriptionAr)}>
+                    {pick(item.description, item.descriptionAr)}
                 </p>
             </div>
         </div>
@@ -82,6 +84,7 @@ function NewsCard({ item }: { item: EventItem }) {
 
 // Main Section Component
 export default function LatestNews() {
+    const { t } = useLanguage();
     const brandBgClass = "bg-[#E55C24]";
     const eventsCount = events.length;
 
@@ -142,20 +145,20 @@ export default function LatestNews() {
 
                 {/* Header */}
                 <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">
-                    News & Updates
+                    {t.news.label}
                 </span>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 leading-tight">
-                    Latest from 3D Geoscan
+                    {t.news.heading}
                 </h2>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                    Stay updated with our latest events and activities.
+                    {t.news.description}
                 </p>
 
                 <div className="relative flex items-center">
                     <button
                         onClick={handlePrev}
-                        aria-label="Previous"
-                        className="absolute -left-2 md:-left-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
+                        aria-label={t.news.previous}
+                        className="absolute -left-2 md:-left-10 rtl:left-auto rtl:-right-2 rtl:md:-right-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -172,8 +175,8 @@ export default function LatestNews() {
 
                     <button
                         onClick={handleNext}
-                        aria-label="Next"
-                        className="absolute -right-2 md:-right-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
+                        aria-label={t.news.next}
+                        className="absolute -right-2 md:-right-10 rtl:right-auto rtl:-left-2 rtl:md:-left-10 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

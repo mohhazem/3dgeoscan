@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const PARTNERS = [
   { id: 1, name: "Partner 1" },
@@ -46,6 +47,7 @@ const PARTNERS = [
 ];
 
 export default function Contact() {
+  const { t } = useLanguage();
   const trackRef = useRef<HTMLDivElement>(null);
   const positionRef = useRef(0);
   const isPausedRef = useRef(false);
@@ -134,6 +136,7 @@ export default function Contact() {
 
       {/* Carousel */}
       <div
+        dir="ltr"
         className="relative z-10 w-full mb-16 overflow-hidden bg-white cursor-grab active:cursor-grabbing"
         style={{
           WebkitMaskImage:
@@ -170,14 +173,14 @@ export default function Contact() {
       {/* CTA */}
       <div className="relative z-10 text-center px-4 sm:px-6">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
-          BE OUR PARTNER
+          {t.partner.heading}
         </h2>
 
         <Link
           href="/contact"
           className="w-full sm:w-[189px] h-[48px] rounded-[300px] p-[10px] gap-[10px] flex items-center justify-center bg-[#2C2C31] text-white font-semibold hover:bg-[#3C3C41] transition-colors duration-300 mx-auto cursor-pointer"
         >
-          Contact Us
+          {t.partner.contactUs}
         </Link>
       </div>
     </section>

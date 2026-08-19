@@ -3,15 +3,11 @@
 import Polymesh from '@/components/layout/polymesh';
 import AnimatedCounter from './animated-counter';
 import GraphLine from '../layout/graph-line';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 const StatsSection = () => {
-
-  const stats = [
-    { value: '70', suffix: '+', label: 'Projects' },
-    { value: '120', suffix: '+', label: 'TB Storage' },
-    { value: '11', unit: 'M', suffix: '+', label: 'm² Scanned' },
-    { value: '8', unit: 'M', suffix: '+', label: 'm² Digitized' }
-  ];
+  const { t } = useLanguage();
+  const stats = t.stats.items;
 
   return (
     <section id="stats" className="w-full bg-white h-screen md:snap-start pt-20">
@@ -22,13 +18,12 @@ const StatsSection = () => {
             <Polymesh />
           </div>
           <div className="relative z-10 flex flex-col justify-center h-full p-6 md:p-8 lg:p-12">
-            <span className="text-sm md:text-lg font-bold text-orange-500 mb-4">Why choose us</span>
+            <span className="text-sm md:text-lg font-bold text-orange-500 mb-4">{t.stats.label}</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              Industry-Leading Capabilities
+              {t.stats.heading}
             </h2>
             <p className="text-[#AEAEAE] leading-relaxed">
-              With the latest equipment of laser scanners and a team of certified professionals, we deliver
-              unmatched precision and efficiency on every project
+              {t.stats.description}
             </p>
           </div>
         </div>

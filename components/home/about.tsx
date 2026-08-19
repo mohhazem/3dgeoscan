@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Logo3D from "../Logo3D";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const CheckmarkIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,6 +12,8 @@ const CheckmarkIcon = () => (
 );
 
 export default function About() {
+  const { t } = useLanguage();
+
   return (
     <section id="about" className="py-16 md:pt-32 lg:pt-32 bg-white h-screen md:snap-start flex items-center justify-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,54 +24,35 @@ export default function About() {
           {/* left side - text */}
           <div>
             <span className="text-sm md:text-lg font-bold text-orange-500 mb-8">
-              About us
+              {t.about.label}
             </span>
 
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-              We are the architects of precision
+              {t.about.heading}
             </h3>
 
             <p className="text-gray-600 mb-6 leading-relaxed ">
-              3D Geoscan is an Egyptian company delivering reliable,
-              state-of-the-art 3D geospatial and 3D modeling solutions.
-              We provide full end-to-end services
-              using the latest technologies from trusted, market-leading brands.
+              {t.about.paragraph1}
             </p>
 
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4">
-              What We Do & Why It Matters
+              {t.about.subheading}
             </h3>
 
             <p className="text-gray-600 leading-relaxed">
-              Our portfolio of
-              3D solutions includes (but not limited to)
-              Mobile Data Collection, 3D Scanning, 3D Printing, Ground
-              Penetrating Radar, and Pipeline Mapping.</p>
+              {t.about.paragraph2}</p>
             <p className="text-gray-600  leading-relaxed">
-              The result? Higher
-              quality outputs, faster project delivery, and
-              productivity boosts that make timelines shorter and results
-              sharper. Less waiting, more winning.
+              {t.about.paragraph3}
             </p>
 
             {/* features list */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-              <div className="flex items-center gap-3">
-                <CheckmarkIcon />
-                <span className="text-sm text-gray-700">Latest generation of laser scanners</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckmarkIcon />
-                <span className="text-sm text-gray-700">Strong servers for data processing & archiving</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckmarkIcon />
-                <span className="text-sm text-gray-700">Seamless BIM & CAD integration</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <CheckmarkIcon />
-                <span className="text-sm text-gray-700">Comprehensive training programs</span>
-              </div>
+              {t.about.features.map((feature) => (
+                <div key={feature} className="flex items-center gap-3">
+                  <CheckmarkIcon />
+                  <span className="text-sm text-gray-700">{feature}</span>
+                </div>
+              ))}
             </div>
 
           </div>

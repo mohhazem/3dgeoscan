@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Typewriter from "./typewriter";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center md:snap-start overflow-hidden">
       {/* background image - optimized with next/image */}
@@ -23,22 +28,18 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* main title */}
         <h1 className="text-white font-bold tracking-widest uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 leading-tight max-w-3xl">
-          A jump
+          {t.hero.titleLine1}
           <br />
-          into <span className="text-[#F36F21]">the future</span>
+          {t.hero.titleLine2Prefix} <span className="text-[#F36F21]">{t.hero.titleHighlight}</span>
         </h1>
 
         {/* description */}
         <p className="text-gray-300 sm:text-lg">
-          A World Transformed by{" "}
-          <Typewriter
-            words={["Precision Scanning", "Digital Innovation", "3D Geo-Intelligence"]}
-          />
+          {t.hero.descriptionPrefix}{" "}
+          <Typewriter words={t.hero.typewriterWords} />
         </p>
         <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-xl leading-relaxed">
-          utilizing cutting-edge laser scanning technology and we capture reality in
-          unparalleled detail — enabling smarter design, faster construction, and precise
-          heritage preservation.
+          {t.hero.description2}
         </p>
 
         {/* buttons */}
@@ -49,14 +50,14 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="bg-white/20 border border-white text-white px-6 py-3 rounded-xl text-base font-medium hover:bg-white hover:text-gray-900 transition-colors text-center"
           >
-            Watch our videos
+            {t.hero.watchVideos}
           </Link>
         </div>
       </div>
 
       {/* scroll indicator */}
       <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-white/70 text-sm">scroll for more</span>
+        <span className="text-white/70 text-sm">{t.hero.scrollForMore}</span>
         <svg
           className="w-5 h-5 text-white/70"
           fill="none"

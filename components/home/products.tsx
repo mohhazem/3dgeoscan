@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { products } from '@/constants/products';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Products() {
+    const { t, pick, dir } = useLanguage();
     const brandColorClass = 'text-orange-600';
     const brandBgClass = 'bg-[#E55C24]';
     const transitionDurationMs = 500;
@@ -66,7 +68,7 @@ export default function Products() {
                 {/* Section Heading */}
                 <div className='flex-col flex md:flex-row justify-center items-center gap-3 mb-8 md:mb-12'>
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                        Our Products
+                        {t.productsHome.heading}
                     </h2>
                     <img className='h-16' src="images/3dGeoscanFaro2.png" alt="faro insight authorized distributor" />
                 </div>
@@ -75,14 +77,14 @@ export default function Products() {
                 <div className="relative flex items-center">
 
                     {/* Left Navigation Arrow */}
-                    <button onClick={handlePrev} disabled={isAnimating} aria-label="Previous" className="absolute top-32 md:bottom-32 left-2 md:-left-12 lg:-left-16 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <button onClick={handlePrev} disabled={isAnimating} aria-label={t.productsHome.previous} className="absolute top-32 md:bottom-32 left-2 md:-left-12 lg:-left-16 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-12 md:h-12">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
                     </button>
 
                     {/* Overflow wrapper for slide effect */}
-                    <div className="overflow-hidden w-full">
+                    <div className="overflow-hidden w-full" dir="ltr">
                         <div
                             className="grid grid-flow-col auto-cols-[100%] transition-transform ease-in-out"
                             style={{
@@ -91,7 +93,7 @@ export default function Products() {
                             }}
                         >
                             {products.map((product) => (
-                                <div key={product.id} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full min-h-[350px] md:min-h-[450px]">
+                                <div key={product.id} dir={dir} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full min-h-[350px] md:min-h-[450px]">
 
                                     {/* --- Column 1: Product Image (Card Style) --- */}
                                     <div className="relative w-full aspect-square max-h-[300px] md:max-h-[400px] lg:max-h-[450px] bg-gray-50 rounded-[40px] flex items-center justify-center p-4 md:p-6 lg:p-8">
@@ -113,13 +115,13 @@ export default function Products() {
                                         {/* Software Badge — only shown for software products */}
                                         {product.type === 'software' && (
                                             <span className="inline-block text-sm font-semibold text-[#E55C24] uppercase tracking-widest mb-3">
-                                                Applicable Software
+                                                {t.productsHome.softwareBadge}
                                             </span>
                                         )}
 
                                         {/* Description */}
                                         <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-6 md:mb-8 line-clamp-3">
-                                            {product.description}
+                                            {pick(product.description, product.descriptionAr)}
                                         </p>
 
                                         {/* Two-Column List Section (Package Includes & Logos) */}
@@ -127,11 +129,11 @@ export default function Products() {
 
                                             {/* Package Includes */}
                                             <div>
-                                                <h4 className="font-bold text-gray-900 mb-3">Package Includes</h4>
+                                                <h4 className="font-bold text-gray-900 mb-3">{t.productsHome.packageIncludes}</h4>
                                                 <ul className="space-y-2">
-                                                    {product.packageIncludes.map((item, idx) => (
+                                                    {pick(product.packageIncludes, product.packageIncludesAr).map((item, idx) => (
                                                         <li key={idx} className="flex items-start text-sm text-gray-600">
-                                                            <span className={`${brandColorClass} mr-2`}>•</span>
+                                                            <span className={`${brandColorClass} me-2`}>•</span>
                                                             {item}
                                                         </li>
                                                     ))}
@@ -141,7 +143,7 @@ export default function Products() {
                                             {/* Logos — only shown for hardware products */}
                                             {product.type === 'hardware' && (
                                                 <div>
-                                                    <h4 className="font-bold text-gray-900 mb-3">Applicable Software</h4>
+                                                    <h4 className="font-bold text-gray-900 mb-3">{t.productsHome.applicableSoftware}</h4>
                                                     <div className="flex flex-wrap items-center gap-3">
                                                         {product.logos.map((logo, i) => (
                                                             <img key={i} src={`/images/${logo}`} alt="" className='h-12' />
@@ -158,13 +160,13 @@ export default function Products() {
                                                 href="https://3dgeoscan.com/contact"
                                                 className={`${brandBgClass} text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:opacity-90 transition cursor-pointer`}
                                             >
-                                                Get a Quote
+                                                {t.productsHome.getQuote}
                                             </a>
                                             <Link
                                                 href={`/products?product=${product.slug}`}
                                                 className="bg-white text-[#E55C24] border-2 border-[#E55C24] font-semibold py-2 px-6 md:py-3 md:px-8 rounded-lg hover:bg-orange-50 transition cursor-pointer"
                                             >
-                                                Learn More
+                                                {t.productsHome.learnMore}
                                             </Link>
                                         </div>
                                     </div>
@@ -174,7 +176,7 @@ export default function Products() {
                     </div>
 
                     {/* Right Navigation Arrow */}
-                    <button onClick={handleNext} disabled={isAnimating} aria-label="Next" className="absolute top-32 md:bottom-32 right-2 md:-right-12 lg:-right-16 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <button onClick={handleNext} disabled={isAnimating} aria-label={t.productsHome.next} className="absolute top-32 md:bottom-32 right-2 md:-right-12 lg:-right-16 z-20 p-1 md:p-2 text-gray-400 cursor-pointer hover:text-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 md:w-12 md:h-12">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
@@ -188,7 +190,7 @@ export default function Products() {
                             key={index}
                             onClick={() => handleDotClick(index)}
                             disabled={isAnimating}
-                            aria-label={`Go to slide ${index + 1}`}
+                            aria-label={`${t.productsHome.goToSlide} ${index + 1}`}
                             className={`w-3 h-3 rounded-full transition ${currentIndex === index
                                 ? brandBgClass
                                 : 'bg-gray-300 hover:bg-gray-400 cursor-pointer'

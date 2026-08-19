@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Service4() {
+    const { t } = useLanguage();
     const [sliderPosition, setSliderPosition] = useState(50);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
@@ -33,20 +35,13 @@ export default function Service4() {
     };
 
     // Key Features Data
-    const features = [
-        "Deep-Earth Visualization.",
-        "Void and Cavity Detection.",
-        "Non-Invasive analysis",
-        "Geodata Integration.",
-    ];
+    const features = t.servicesPage.service4.features;
 
     // Application Industries Data
-    const applications = [
-        { icon: "building", name: "Water Paths" },
-        { icon: "building", name: "Archaeological Site Assessment" },
-        { icon: "building", name: "Infrastructure Foundations" },
-        
-    ];
+    const applications = t.servicesPage.service4.applications.map((name) => ({
+        icon: "building",
+        name,
+    }));
 
     return (
         <section id="geophysical-studies" className="min-h-screen md:h-screen bg-gray-50 py-20 flex items-center">
@@ -108,23 +103,22 @@ export default function Service4() {
                     <div className="order-2">
                         {/* Main Title */}
                         <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                            Geophysical Studies
+                            {t.servicesPage.service4.title}
                         </h2>
 
                         {/* Subtitle */}
                         <h3 className="text-xl lg:text-2xl font-semibold text-[#E85A2C] mb-4">
-                            Revealing the Hidden Earth with Digital Precision
+                            {t.servicesPage.service4.subtitle}
                         </h3>
 
                         {/* Description */}
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            We go beyond the surface to provide high quality data on ground materials , composition
-                            and stability. A clear look at the earth below to avoid potential risks and ensure safety.
+                            {t.servicesPage.service4.description}
                         </p>
 
                         {/* Key Features */}
                         <div className="mb-8">
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Key Features</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.keyFeatures}</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {features.map((feature, index) => (
                                     <div key={index} className="flex items-center gap-3">
@@ -141,7 +135,7 @@ export default function Service4() {
 
                         {/* Application */}
                         <div>
-                            <h4 className="text-lg font-bold text-gray-900 mb-4">Application</h4>
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">{t.servicesPage.application}</h4>
                             <div className="flex flex-wrap gap-3">
                                 {applications.map((app, index) => (
                                     <div
